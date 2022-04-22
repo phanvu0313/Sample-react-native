@@ -145,7 +145,7 @@ const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => {
   return (
     <DrawerStack.Navigator drawerContent={props => <DrawerContent {...props} />} screenOptions={{
-        drawerType: 'front',
+        drawerType: 'back',
         headerShown: false,
       }} >
       <DrawerStack.Screen
