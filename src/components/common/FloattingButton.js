@@ -29,18 +29,35 @@ const FloattingButton = (props) => {
     }
     const onSeclected =(name)=>{
        toggleMenu()
-       props.onPress()
+       props.push(name)
     }
 
 
     const rotation ={
         transform: [{
             rotate: animation.interpolate({
-              inputRange: [0, 1],
-              outputRange: ["0deg", '45deg'] 
+              inputRange: [0, 0.5,1],
+              outputRange: ["0deg", '55deg','45deg'] 
             }),
-          }]
+
+          },
+          {
+            scaleX:animation.interpolate({
+                inputRange: [0,0.5,1],
+                outputRange: [1,1.2,1]
+            })
+            },
+            {
+                scaleY: animation.interpolate({
+                    inputRange: [0,0.5,1],
+                    outputRange: [1,1.2,1]
+                })
+            }
+
+        
+        ]
     }
+    
     const firstStyle ={
         transform: [
             {scale:animation},
@@ -85,29 +102,29 @@ const FloattingButton = (props) => {
             }} >
             <Animated.View style={[styles.button,styles.secondary,thirdStyle,opacity]}>
 
-                <Icon name="ios-logo-ionic" size={24} color="red" ></Icon>
+                <Icon name="ios-logo-ionic" size={24} color="black" ></Icon>
 
                 </Animated.View>
                 
             </TouchableOpacity>
 
             <TouchableOpacity onPress ={()=>{
-                onSeclected('second')
+                onSeclected('Cloudy')
             }} >
             <Animated.View style={[styles.button,styles.secondary,secondStyle,opacity]}>
 
-                <Icon name="ios-logo-foursquare" size={24} color="red" ></Icon>
+                <Icon name="ios-cloudy" size={24} color="black" ></Icon>
 
                 </Animated.View>
                 
             </TouchableOpacity>
 
             <TouchableOpacity  onPress ={()=>{
-                onSeclected('first')
+                onSeclected('Moon')
             }} >
             <Animated.View style={[styles.button,styles.secondary,firstStyle,opacity]}>
 
-                <Icon name="ios-moon-outline" size={24} color="red" ></Icon>
+                <Icon name="ios-moon" size={24} color="black" ></Icon>
 
                 </Animated.View>
                 
@@ -116,12 +133,14 @@ const FloattingButton = (props) => {
             <TouchableWithoutFeedback onPress={toggleMenu} >
                 
                 <Animated.View style={[styles.button,styles.menu,rotation]}>
+                
                     <LinearGradient
-                        start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}}
-                        locations={[1,1,0.5]}
-                        colors={['#fa7e45', '#fa7e45', '#fe636a']}
+                        start={{x: 0, y: 0}} end={{x: 0.5, y: 1.0}}
+                        locations={[1,1,0.1]}
+                        colors={['#000', '#575757', '#595959']}
                         style={styles.button}>
-                        <Icon name="md-add" size={30} color="white" ></Icon>
+                        <Icon name="md-add" size={30} color="#f0f2f6" ></Icon>
+                        
                     </LinearGradient>
                 </Animated.View>
                 
@@ -137,7 +156,7 @@ const styles = StyleSheet.create({
         position:'absolute'
     },
     menu:{
-        backgroundColor:'#f74b20',
+        backgroundColor:'white',
         borderColor:'white',
         borderWidth:1,
 
@@ -149,25 +168,22 @@ const styles = StyleSheet.create({
         borderRadius:60/2,
         justifyContent:'center',
         alignItems:'center',
-        borderWidth:0.2,
-        borderColor:'white',
-        shadowRadius:10,
-        shadowColor:'red',
-        shadowOpacity:0.7,
-        shadowOffset:{height:10},
+        shadowRadius:5,
+        shadowColor:'black',
+        shadowOpacity:0.9,
+        shadowOffset:{height:0},
 
     },
-      
     secondary:{
         width:48,
         height:48,
         borderRadius:60/2,
         justifyContent:'center',
         alignItems:'center',
-        shadowRadius:10,
-        shadowColor:'red',
+        shadowRadius:4,
+        shadowColor:'black',
         shadowOpacity:0.3,
-        shadowOffset:{height:10},
+        shadowOffset:{height:0},
         backgroundColor:'white'
     },
       
@@ -178,4 +194,5 @@ export default FloattingButton;
 
 FloattingButton.propTypes = {
     onPress: PropType.func,
+    
   }

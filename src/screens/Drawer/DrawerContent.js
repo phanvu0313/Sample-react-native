@@ -12,7 +12,7 @@ const DrawerContent = (props) => {
     return (
         <>
         <View style={[{flex:1,backgroundColor:'red',opacity:1,}]}>
-            <View style={{flex:0.75,backgroundColor:'#fa7e45'}} />
+            <View style={{flex:0.75,backgroundColor:'#fff'}} />
             <View style={{flex:2,backgroundColor:'#3076e6'}} />
             <View style={{flex:0.25,backgroundColor:'yellow'}} />
         </View>
@@ -23,15 +23,15 @@ const DrawerContent = (props) => {
 
 
            <View style={{flex:2,flexDirection:'row'}}>
-            <LinearGradient colors={['#fa7e45', '#fa7e45', '#fe636a']} style={styles.linearGradient}>
+            <LinearGradient colors={['#fff', '#fff', '#fff']} style={styles.linearGradient}>
                 <View style={styles.mainView2}>
                 </View>
                 <View style={[styles.mainView,StyleSheet.absoluteFill,{paddingTop:150}]}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate("Home")}}>
                         <Icon style={{flex:0.2}} name="earth-outline" size={30} color="#0D5C75" ></Icon>
                         <Text style={{flex:0.5,fontSize:20,fontWeight:'bold',color:'#0D5C75'}}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate('Home_2')}}>
                         <Icon style={{flex:0.2}} name="gift-outline" size={30} color="#0D5C75" ></Icon>
                         <Text style={{flex:0.5,fontSize:20,fontWeight:'bold',color:'#0D5C75'}}>Info</Text>
                     </TouchableOpacity>
@@ -43,7 +43,7 @@ const DrawerContent = (props) => {
             </LinearGradient>
             <View style={{flex:0.05,backgroundColor:'#3076e6'}}/>
            </View>
-           <View style={{flex:0.25,backgroundColor:'#fe636a',flexDirection:'row'}}>
+           <View style={{flex:0.25,backgroundColor:'#fff',flexDirection:'row'}}>
                <View style={{flex:1}}>
                 <TouchableOpacity onPress={signOut} style={[styles.logOut]}>
                         <Icon style={{flex:0.2}} name="exit" size={30} color="white" ></Icon>
@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
     },
     mainView2:{
         flex:1,
-        backgroundColor:'#a63dcc', 
+        backgroundColor:'#3076e6', 
         marginRight:20,
         marginVertical:40,
         borderTopRightRadius:40,
         borderBottomRightRadius:40,
-        opacity:0.3,
+        opacity:1,
         shadowOffset: {
             width: 0,
             height: 6,

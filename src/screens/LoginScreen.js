@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import LinearGradient from 'react-native-linear-gradient';
+
 import {Keyboard} from "react-native";
 import LottieView from 'lottie-react-native';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
@@ -49,7 +50,7 @@ const LoginScreen = (props) => {
         <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{flex:1,backgroundColor:'white'}}>
-            <LinearGradient colors={['#A5D1E1', '#199FB1', '#0D5C75']} style={styles.linearGradient}>
+            <LinearGradient colors={['#0cebeb', '#20e3b2', '#29ffc6']} style={styles.linearGradient}>
                 <Animated.View style={{flex:0.3,
                 transform: [{
                     translateY: LoginViewAnimation.interpolate({

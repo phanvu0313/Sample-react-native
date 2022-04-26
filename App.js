@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import {
-  StatusBar, Settings, TouchableOpacity
+  StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated,Text
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,18 +22,23 @@ import DashboardScreen from './src/screens/DashboardScreen';
 import FeedScreen from './src/screens/FeedScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/Feed/DetailsScreen';
+import SingleScreen from './src/screens/SingleScreen'
 import Moon from './src/screens/Feed/Moon';
-
+import Cloudy from './src/screens/Feed/Cloudy';
+import LinearGradient from 'react-native-linear-gradient';
 /** STATE MANAGEMENT */
 import STORE from './src/Store/model';
 const store = createStore(STORE);
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
 const SettingStack = createStackNavigator();
 const SettingsStackScreen = () => {
   return (
-    <SettingStack.Navigator>
+    <SettingStack.Navigator screenOptions={{headerShown: false}}>
       <SettingStack.Screen
           name="Setting"
+          
           component={SettingsScreen}
       />
     </SettingStack.Navigator>
@@ -53,11 +58,12 @@ const FeedStackScreen = ({ navigation }) => {
           component={FeedScreen}
           options={{
             title: "Hello",
+            headerShadowVisible:false,
             headerLeft : () => {
               return (
                 <TouchableOpacity 
                   style={{
-                    paddingHorizontal: 10
+                    paddingHorizontal: 10,
                   }}
                   onPress={() => navigation.toggleDrawer()}
                 >
@@ -95,49 +101,113 @@ const FeedStackScreen = ({ navigation }) => {
           name={"Moon"}
           component={Moon}
       />
+      <FeedStack.Screen
+          name={"Cloudy"}
+          component={Cloudy}
+      />
     </FeedStack.Navigator>
   )
 }
 
 const TabStack = createBottomTabNavigator();
 const TabsScreen = () => {
+  const tabOffsetValue = React.useRef(new Animated.Value(getWith())).current;
+  
   return (
+    <>
     <TabStack.Navigator screenOptions={{
       headerShown: false,
+      tabBarShowLabel:false,
+      tabBarStyle: {...styles.box}
       
-    }}>
+      }}>
       <TabStack.Screen
           name={"FeedStack"}
           component={FeedStackScreen}
           options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-            <Ionicons name="logo-sass" color={color} size={26} />
+            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            tabBarIcon: ({ focused }) => (
+              <View style={{position:'absolute', top:'40%'}}>
+                <Ionicons name="pizza" color={focused ? '#FF4E50' : 'gray'} size={focused ? 28 : 26}/>             
+              </View>
+           
             ),
-        }}
+        }} listeners={({navigation,route})=>({
+          tabPress: e => {
+            Animated.spring(tabOffsetValue,{
+              toValue:getWith()*1,
+              useNativeDriver:true,
+            }).start()
+
+          }
+        })}
       />
       <TabStack.Screen
-          name={"Settings"}
+          name={"Weather"}
           component={SettingsStackScreen}
           options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-            <Ionicons name="logo-sass" color={'red'} size={26} />
+            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Weather</Text>,
+            tabBarIcon: ({ focused }) => (
+              <View style={{position:'absolute', top:'50%'}}>
+                   <Ionicons name="rainy" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              </View>
+            
             ),
-        }}
+        }}listeners={({navigation,route})=>({
+          tabPress: e => {
+            Animated.spring(tabOffsetValue,{
+              toValue:getWith()*7,
+              useNativeDriver:true,
+
+            }).start()
+
+          }
+        })}
       />
       <TabStack.Screen
           name={"Profile"}
           component={ProfileScreen}
           options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color }) => (
-            <Ionicons name="logo-sass" color={'yellow'} size={26} />
+            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Pizza</Text>,
+            tabBarIcon: ({ focused }) => (
+              <View style={{position:'absolute', top:'50%'}}>
+                   <Ionicons name="ios-settings" color={focused ? '#fff' : 'gray'} size={focused ? 28 : 26} />
+              </View>
+            
             ),
-        }}
+        }}listeners={({navigation,route})=>({
+          tabPress: e => {
+            Animated.spring(tabOffsetValue,{
+              toValue:getWith() * 13,
+              useNativeDriver:true
+            }).start()
+
+          }
+        })}
       />
     </TabStack.Navigator>
+    <Animated.View style={{
+      flexDirection:'row',
+      height:4,
+      width:((windowWidth-60)/18)*4,
+      left:20,
+      backgroundColor:'white',
+      position:'absolute',
+      bottom:20 + windowHeight/11,
+      borderRadius:150,
+      transform:[
+        {translateX:tabOffsetValue}
+      ]
+    }}>
+      
+    </Animated.View>
+    </>
   )
+  function getWith(){
+    let width = Dimensions.get('window').width;
+    width = width - 40
+    return width / 18;
+  }
 }
 
 
@@ -145,7 +215,7 @@ const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => {
   return (
     <DrawerStack.Navigator drawerContent={props => <DrawerContent {...props} />} screenOptions={{
-        drawerType: 'back',
+        drawerType: 'front',
         headerShown: false,
       }} >
       <DrawerStack.Screen
@@ -153,8 +223,8 @@ const DrawerStackScreen = () => {
           component={TabsScreen}
       />
       <DrawerStack.Screen
-          name={"Profile"}
-          component={ProfileScreen}
+          name={"Home_2"}
+          component={SingleScreen}
       />
     </DrawerStack.Navigator>
   )
@@ -216,8 +286,27 @@ const RootStackScreen = (props) => {
     }}
     {...props}
     >
-      {
+      {/* {
         isloggedin ? (
+          <RootStack.Screen
+              name={"Dashboard"}
+              component={DrawerStackScreen}
+              options={{
+                title: "Feed"
+              }}
+          />
+        ) : (
+          <RootStack.Screen
+            name={"Welcome"}
+            component={AuthenticationStack}
+            options={{
+              animationEnabled: false
+            }}
+          />
+        )
+      } */}
+      {
+        1 ? (
           <RootStack.Screen
               name={"Dashboard"}
               component={DrawerStackScreen}
@@ -254,3 +343,36 @@ const App = () => {
 };
 
 export default App;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  box: {
+    position:'absolute',
+    bottom:25,
+    height:windowHeight/11,
+    marginHorizontal:20,
+    borderRadius:17,
+    backgroundColor:'black',
+    shadowRadius:10,
+    shadowColor:'#000',
+    shadowOpacity:0.5,
+    shadowOffset:{height:10},
+    borderColor:'#fff',
+    borderWidth:4,
+    borderBottomWidth:0
+  },
+  lable:{
+    fontSize:12,
+    top:'20%',
+    fontWeight:'500',
+    color:'white',
+
+  }
+});
+

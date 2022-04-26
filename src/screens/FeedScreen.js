@@ -3,13 +3,19 @@ import { View, Text,StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import FloattingButton from '../components/common/FloattingButton'
 import {PanGestureHandler} from 'react-native-gesture-handler'
+import LinearGradient from 'react-native-linear-gradient'
 
 const FeedScreen = ({ navigation: { push } }) => {
+    const [nameScreen,setNameScreen] = React.useState('');
+    callbackFunction = (childData) => {
+        setNameScreen(childData)
+      }
+
+    
+    
     return (
         <View style={styles.container}>
-
-            <FloattingButton onPress={()=>{push('Details')}} style = {styles.floatingButtonStyle} />
-
+            <FloattingButton push ={push} style = {styles.floatingButtonStyle} />
         </View>
         // <View style={{
         //     flex: 1,
@@ -40,12 +46,12 @@ const FeedScreen = ({ navigation: { push } }) => {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor:'#A5D1E1',
+        backgroundColor:'#f0f2f6'//'#A5D1E1',
         //alignItems:'center',
       },
       floatingButtonStyle:{
-          bottom:100,
-          left:10
+          bottom:200,
+          left:20
       }
       
 })

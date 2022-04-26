@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SettingsScreen = () => {
+const SingleScreen = () => {
     const NeuMorph = ({children,style,sizeW,sizeH}) =>{
         return (
             <View style={styles.topShadow}>
@@ -79,7 +79,7 @@ const SettingsScreen = () => {
     )
 }
 
-export default SettingsScreen
+export default SingleScreen
 const styles = StyleSheet.create({
     //View
     container:{
