@@ -18,7 +18,7 @@ const FloattingButton = (props) => {
     const [currentSeclect, setCurrentSeclect] = React.useState("");
 
     animation = new Animated.Value(0);
-    toggleMenu = ()=> {
+    toggleMenu = (name)=> {
         const toValue = this.open ? 0 : 1 ;
         Animated.spring(animation,{
             toValue,

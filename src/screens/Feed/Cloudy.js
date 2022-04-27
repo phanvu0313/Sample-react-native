@@ -5,10 +5,12 @@ import LinearGradient from 'react-native-linear-gradient';
 const Cloudy = () => {
     return (
         <View style={{flex:1}}>
-            <LinearGradient style={{flex:1}} start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#02CBD6', '#00B4D4'] }>
+            <LinearGradient style={{flex:1}}  colors={['#02CBD6', '#00B4D4'] }>
 
-            </LinearGradient> 
+            </LinearGradient>   
+
         </View>
+        
     )
 }
 

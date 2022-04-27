@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Dimensions } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { Shadow,Neomorph } from 'react-native-neomorph-shadows';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
