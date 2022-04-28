@@ -3,7 +3,6 @@ import { View, Text,StyleSheet,Dimensions } from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
-import NeuButton from '../components/NeuButton';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -25,36 +24,7 @@ const SettingsScreen = () => {
     }
     return (
             <View style={styles.container}>
-                <View style={[styles.alarmView,{flexDirection:'row',marginTop:60,paddingBottom:10,borderBottomWidth:2,borderColor:'white'}]}>
-                    <View style={{flex:2,marginLeft:100,justifyContent:'center',alignItems:'center'}}>
-                        <NeuButton size={50} style={{borderRadius:20}}>
-                            <Icon name="add" size={30} color="#545454" ></Icon>
-                        </NeuButton>
-                    </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                        <TouchableOpacity>
-                                <NeuMorph sizeH={60} sizeW={60} radius={120}>
-                                    <Icon name="add" size={30} color="#545454" ></Icon>
-                                </NeuMorph>
-                        </TouchableOpacity>
-
-                    </View>
-                        
-                    </View>
-                    <View style={[styles.alarmView,{marginTop:60}]}>
-                        <TouchableOpacity>
-                            <NeuMorph sizeW={windowWidth-40} sizeH={80} radius={20}>
-                                <Icon name="timer-sharp" size={30} color="#545454" ></Icon>
-                            </NeuMorph>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.alarmView,{marginTop:60}]}>
-                        <TouchableOpacity>
-                            <NeuMorph sizeW={windowWidth-40} sizeH={80} radius={20}>
-                                {/* <Icon name="timer-sharp" size={30} color="#545454" ></Icon> */}
-                            </NeuMorph>
-                        </TouchableOpacity>
-                    </View>
+                
             </View>  
     )
 }
