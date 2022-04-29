@@ -284,7 +284,6 @@ const RootStackScreen = (props) => {
     const checkFirst = async () => {
       const appData = await AsyncStorage.getItem('isAppFirstLaunched');
       if (appData == null) {
-        console.log('first');
         setIsAppFirstLaunched(true);
         AsyncStorage.setItem('isAppFirstLaunched', 'false');
       } else {
@@ -293,7 +292,6 @@ const RootStackScreen = (props) => {
       
     }
     useEffect(() => {
-      console.log(props.abc)
       checkToken()
       checkFirst()
       //clearAppData()
