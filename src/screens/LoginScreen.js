@@ -10,6 +10,7 @@ import LottieView from 'lottie-react-native';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import AsyncStorage from '@react-native-community/async-storage';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -35,6 +36,20 @@ const LoginScreen = (props) => {
           }
         }catch(error){
           console.log(error)
+        }
+      }
+      const clearAppData = async () => {
+        console.log('cleared');
+        try {
+            const value = await AsyncStorage.getItem('isAppFirstLaunched')
+            if (value){
+                await AsyncStorage.removeItem('isAppFirstLaunched')
+            }else{
+                console.log('okok');
+            }
+            
+        } catch (error) {
+            console.error('Error clearing app data.',error);
         }
       }
     useEffect(() => {
@@ -129,8 +144,9 @@ const LoginScreen = (props) => {
                             </TouchableOpacity>
                         </View>
                         <View style={{flex:0.1,justifyContent:'center',alignContent:'center',height:windowWidth/8,paddingHorizontal:40}}>
-                            <TouchableOpacity style={styles.logButton}>
-                                <Text style={{flex:1,fontSize:19,fontWeight:'bold',color:'white'}}>Sign up</Text>
+                            <TouchableOpacity style={styles.logButton}
+                            >
+                                <Text style={{flex:1,fontSize:19,fontWeight:'bold',color:'white'}}>Clear FirstTime</Text>
                                 <Icon name="chevron-forward-sharp" size={30} color="white" ></Icon>
                             </TouchableOpacity>
                         </View>
@@ -138,9 +154,11 @@ const LoginScreen = (props) => {
 
                     </View>
                     <View style={{flex:0.1}}>
-                        <TouchableOpacity style={{alignItems:'center'}}>
+                        <TouchableOpacity style={{alignItems:'center'}} onPress={()=>{
+                                clearAppData()
+                            }}>
                             <View style={{borderBottomWidth:1,borderColor:'white'}}>
-                                <Text style={{color:'white'}} >Term of use</Text>
+                                <Text style={{color:'white'}} >reset welcome screen</Text>
                             </View>
                             
                         </TouchableOpacity>

@@ -261,13 +261,15 @@ const AuthenticationStack = (props) => {
     
   )
 }
-
 const RootStack = createStackNavigator();
 const RootStackScreen = (props) => {
     const isloggedin = useStoreState(state => state.isLoggedin);
     const firstTime = useStoreActions(action => action.firstTime)
     const isFirstime = useStoreState(state => state.isFirstime);
     const loggin = useStoreActions(action => action.loggin)
+    const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
+
+  
 
     const checkToken = async () => {
       try{
@@ -280,25 +282,21 @@ const RootStackScreen = (props) => {
       }
     }
     const checkFirst = async () => {
-      try{
-        const value = await AsyncStorage.getItem("FIRST");
-        console.log(value,'appscreen');
-        if(value==null){
-          firstTime(true);
-        }
-        else if(value == true)
-        {
-          firstTime(false)
-        }
-      }catch(error){
-        console.log(error)
+      const appData = await AsyncStorage.getItem('isAppFirstLaunched');
+      if (appData == null) {
+        console.log('first');
+        setIsAppFirstLaunched(true);
+        AsyncStorage.setItem('isAppFirstLaunched', 'false');
+      } else {
+        setIsAppFirstLaunched(false);
       }
+      
     }
     useEffect(() => {
-      //console.log(isFirstime);
+      console.log(props.abc)
       checkToken()
       checkFirst()
-      clearAppData()
+      //clearAppData()
     }, []);
     
     const clearAppData = async function() {
@@ -308,13 +306,10 @@ const RootStackScreen = (props) => {
       } catch (error) {
           console.error('Error clearing app data.');
       }
-  }
-  if (isFirstime==true) {
+    }
 
-  }else{
-
-  }
     return (
+      isAppFirstLaunched != null && (
       <RootStack.Navigator 
       screenOptions={{
         headerShown: false,
@@ -322,39 +317,69 @@ const RootStackScreen = (props) => {
       }}
       {...props}
       >
-        {
-          isFirstime != false  ? (
-            isloggedin ? (
-              <RootStack.Screen
-                  name={"Dashboard"}
-                  component={DrawerStackScreen}
-                  options={{
-                    title: "Feed"
-                  }}
-              />
-            ) : (
-              <RootStack.Screen
-                name={"SplashScreen"}
-                component={AuthenticationStack}
-                options={{
-                  animationEnabled: false
-                }}
-              />
-            )
-          ) : (
-            <RootStack.Screen
-            name={"Welcome"}
-            component={WelcomeScreen}
+        {isAppFirstLaunched  && (
+            <RootStack.Screen name={"Welcome"}component={WelcomeScreen}
             options={{
               title: "wel"
             }}
-        />
-          ) 
-        }
+          />
+          )}
+          <RootStack.Screen name={"Well"} component={Well}
+            options={{
+              title: "main"
+            }}
+          />
         
-        {/* {
-          1 ? (
-            <RootStack.Screen
+    </RootStack.Navigator>
+      )
+    )
+  }
+
+const WellScreen = createStackNavigator();
+const Well = (props) => {
+    const isloggedin = useStoreState(state => state.isLoggedin);
+    const firstTime = useStoreActions(action => action.firstTime)
+    const isFirstime = useStoreState(state => state.isFirstime);
+    const loggin = useStoreActions(action => action.loggin)
+    const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
+
+  
+
+    const checkToken = async () => {
+      try{
+        const token = await AsyncStorage.getItem("AUTH_TOKEN");
+        if(token){
+          loggin(true);
+        }
+      }catch(error){
+        console.log(error)
+      }
+    }
+    
+    useEffect(() => {
+      checkToken()
+    }, []);
+    
+    const clearAppData = async function() {
+      try {
+          const keys = await AsyncStorage.getAllKeys();
+          await AsyncStorage.multiRemove(keys);
+      } catch (error) {
+          console.error('Error clearing app data.');
+      }
+    }
+
+    return (
+      
+      <WellScreen.Navigator 
+      screenOptions={{
+        headerShown: false,
+      }}
+      {...props}
+      >
+      {
+          isloggedin ? (
+            <WellScreen.Screen
                 name={"Dashboard"}
                 component={DrawerStackScreen}
                 options={{
@@ -362,21 +387,21 @@ const RootStackScreen = (props) => {
                 }}
             />
           ) : (
-            <RootStack.Screen
-              name={"Welcome"}
+            <WellScreen.Screen
+              name={"SplashScreen"}
               component={AuthenticationStack}
               options={{
                 animationEnabled: false
               }}
             />
           )
-        } */}
-      
-    </RootStack.Navigator>
+      }
+    </WellScreen.Navigator>
     )
   }
 
   const App = () => {
+    const [abc, setAbc] = React.useState('hihihoho');
     return (
       <SafeAreaProvider>
       <StoreProvider store={store}>
