@@ -1,17 +1,21 @@
+import item from './itemData'
 export default [
 
     {
         id:'1',
-        title:'Sandwich',
+        title:'Shusi',
         description:'abc',
-        image: require('../../assets/sandwich.png'),
+        image: require('../../assets/sushi.png'),
+        item
+                
 
     },
     {
         id:'2',
-        title:'Shusi',
+        title:'Chicken',
         description:'abc',
-        image: require('../../assets/sushi.png'),
+        image: require('../../assets/chicken.png'),
+        item
 
     },
     {
@@ -19,13 +23,15 @@ export default [
         title:'Spaghetti',
         description:'abc',
         image: require('../../assets/spaghetti.png'),
+        item
 
     },
     {
         id:'4',
-        title:'Chicken',
+        title:'Sandwich',
         description:'abc',
-        image: require('../../assets/chicken.png'),
+        image: require('../../assets/sandwich.png'),
+        item
 
     },
     {
@@ -33,6 +39,7 @@ export default [
         title:'Chicken',
         description:'abc',
         image: require('../../assets/chicken.png'),
+        item
 
     },
 ]

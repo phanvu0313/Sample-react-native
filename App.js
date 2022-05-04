@@ -177,7 +177,7 @@ const TabsScreen = () => {
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'40%'}}>
+              <View style={{position:'absolute',top:'40%'}}>
                 <Image style={{ width: 25, height: 25 }} source={focused ? require('./src/assets/Menu.png'): require('./src/assets/Menu-outline.png')} />          
               </View>
            
