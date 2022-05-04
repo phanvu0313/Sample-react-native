@@ -12,7 +12,7 @@ const WelcomeScreen = ({ navigation },props) => {
 
         <View style={styles.conti}>
             
-           <Onboarding onPress={()=>navigation.navigate("Well")}/>
+           <Onboarding onPress={()=>navigation.replace("Well")}/>
            
         </View> 
     )

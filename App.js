@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import {
-  StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated,Text
+  StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated,Text,Image
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +13,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 /** Screens */
+//stacknavigation
+import Home from './src/screens/Stacknavigation/Home'
+import Discount from './src/screens/Stacknavigation/Discount'
+import Cart from './src/screens/Stacknavigation/Cart'
+import Favorite from './src/screens/Stacknavigation/Favorite'
+import Menu from './src/screens/Stacknavigation/Menu'
 import DrawerContent from './src/screens/Drawer/DrawerContent'
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SplashScreen from './src/screens/Splash';
@@ -124,13 +130,13 @@ const TabsScreen = () => {
       
       }}>
       <TabStack.Screen
-          name={"FeedStack"}
-          component={FeedStackScreen}
+          name={"Home"}
+          component={Home}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'40%'}}>
-                <Ionicons name="pizza" color={focused ? '#FF4E50' : 'gray'} size={focused ? 28 : 26}/>             
+              <View style={{position:'absolute', top:'40%',width:30,height:30}}>
+                <Image style={{ width: 25, height: 26 }} source={focused ? require('./src/assets/Home.png'): require('./src/assets/Home-outline.png')} />            
               </View>
            
             ),
@@ -145,13 +151,55 @@ const TabsScreen = () => {
         })}
       />
       <TabStack.Screen
-          name={"Weather"}
-          component={SettingsStackScreen}
+          name={"Favo"}
+          component={Favorite}
+          options={{
+            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            tabBarIcon: ({ focused }) => (
+              <View style={{position:'absolute', top:'40%'}}>
+                <Image style={{ width: 25, height: 24 }} source={focused ? require('./src/assets/Favourite-focus.png'): require('./src/assets/Favourite.png')} />             
+              </View>
+           
+            ),
+        }} listeners={({navigation,route})=>({
+          tabPress: e => {
+            Animated.spring(tabOffsetValue,{
+              toValue:getWith()*1,
+              useNativeDriver:true,
+            }).start()
+
+          }
+        })}
+      />
+      <TabStack.Screen
+          name={"me"}
+          component={Menu}
+          options={{
+            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            tabBarIcon: ({ focused }) => (
+              <View style={{position:'absolute', top:'40%'}}>
+                <Image style={{ width: 25, height: 25 }} source={focused ? require('./src/assets/Menu.png'): require('./src/assets/Menu-outline.png')} />          
+              </View>
+           
+            ),
+        }} listeners={({navigation,route})=>({
+          tabPress: e => {
+            Animated.spring(tabOffsetValue,{
+              toValue:getWith()*1,
+              useNativeDriver:true,
+            }).start()
+
+          }
+        })}
+      />
+      <TabStack.Screen
+          name={"Dis"}
+          component={Discount}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Weather</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="rainy" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Image style={{ width: 25, height: 25 }} source={focused ? require('./src/assets/Discount-forcus.png'): require('./src/assets/Discount.png')} /> 
               </View>
             
             ),
@@ -167,13 +215,13 @@ const TabsScreen = () => {
         })}
       />
       <TabStack.Screen
-          name={"Profile"}
-          component={ProfileScreen}
+          name={"cart"}
+          component={Cart}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Pizza</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="ios-settings" color={focused ? '#fff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Image style={{ width: 25, height: 25 }} source={focused ? require('./src/assets/cart-focus.png'): require('./src/assets/cart.png')} /> 
               </View>
             
             ),
@@ -188,7 +236,7 @@ const TabsScreen = () => {
         })}
       />
     </TabStack.Navigator>
-    <Animated.View style={{
+    {/* <Animated.View style={{
       flexDirection:'row',
       height:4,
       width:((windowWidth-60)/18)*4,
@@ -202,7 +250,7 @@ const TabsScreen = () => {
       ]
     }}>
       
-    </Animated.View>
+    </Animated.View> */}
     </>
   )
   function getWith(){
@@ -221,11 +269,11 @@ const DrawerStackScreen = () => {
         headerShown: false,
       }} >
       <DrawerStack.Screen
-          name={"Home"}
+          name={"1"}
           component={TabsScreen}
       />
       <DrawerStack.Screen
-          name={"Home_2"}
+          name={"2"}
           component={SingleScreen}
       />
     </DrawerStack.Navigator>
@@ -424,18 +472,8 @@ const styles = StyleSheet.create({
   },
   box: {
     position:'absolute',
-    bottom:25,
-    height:windowHeight/11,
-    marginHorizontal:20,
-    borderRadius:17,
-    backgroundColor:'black',
-    shadowRadius:10,
-    shadowColor:'#000',
-    shadowOpacity:0.5,
-    shadowOffset:{height:10},
-    borderColor:'#fff',
-    borderWidth:4,
-    borderBottomWidth:0
+    height:windowHeight/10,
+    backgroundColor:'#FFF5E0',
   },
   lable:{
     fontSize:12,
