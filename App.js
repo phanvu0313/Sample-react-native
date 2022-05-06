@@ -29,6 +29,8 @@ import DashboardScreen from './src/screens/DashboardScreen';
 import FeedScreen from './src/screens/FeedScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DetailsScreen from './src/screens/Feed/DetailsScreen';
+import Header from './src/screens/Drawer/Header'
+import Profile from './src/screens/Stacknavigation/Home/Profile';
 import SingleScreen from './src/screens/SingleScreen'
 import Moon from './src/screens/Feed/Moon';
 import Cloudy from './src/screens/Feed/Cloudy';
@@ -104,6 +106,7 @@ const FeedStackScreen = ({ navigation }) => {
       <FeedStack.Screen
           name={"Details"}
           component={DetailsScreen}
+          options={{presentation:'modal'}}
       />
       <FeedStack.Screen
           name={"Moon"}
@@ -116,11 +119,152 @@ const FeedStackScreen = ({ navigation }) => {
     </FeedStack.Navigator>
   )
 }
+const HomeStack = createStackNavigator();
+const HomeStackScreen = ({ navigation }) => {
+  const signOut = useStoreActions((action) => action.signOut);
+  const handleSignOut = () => {
+    signOut();
+  }
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+          name={"Home"}
+          component={Home}
+          options={{
+            header: props => <Header {...props} />,
+            headerShadowVisible:false,
+            //headerShown:false
+          }}
+      />
+      <HomeStack.Screen
+          name={"Profile"}
+          component={Profile}
+          options={{
+            presentation:'modal',
+            cardStyle:{borderTopLeftRadius:30,borderTopRightRadius:30},
+            headerShown:false
+          }}
+      />
+      
+    </HomeStack.Navigator>
+  )
+}
+const MenuStack = createStackNavigator();
+const MenuStackScreen = ({ navigation }) => {
+  const signOut = useStoreActions((action) => action.signOut);
+  const handleSignOut = () => {
+    signOut();
+  }
+  return (
+    <MenuStack.Navigator>
+      <MenuStack.Screen
+          name={"Menu"}
+          component={Menu}
+          options={{
+            header: props => <Header {...props} />,
+            headerShadowVisible:false,
+            //headerShown:false
+          }}
+      />
+      <HomeStack.Screen
+          name={"Profile"}
+          component={Profile}
+          options={{
+            presentation:'modal',
+            cardStyle:{borderTopLeftRadius:30,borderTopRightRadius:30},
+            headerShown:false
+          }}
+      />
+
+    </MenuStack.Navigator>
+  )
+}
+const CartStack = createStackNavigator();
+const CartStackScreen = ({ navigation }) => {
+  const signOut = useStoreActions((action) => action.signOut);
+  const handleSignOut = () => {
+    signOut();
+  }
+  return (
+    <CartStack.Navigator>
+      <CartStack.Screen
+          name={"Cart"}
+          component={Cart}
+          options={{
+            header: props => <Header {...props} />,
+            headerShadowVisible:false,
+            //headerShown:false
+          }}
+      />
+      <HomeStack.Screen
+          name={"Profile"}
+          component={Profile}
+          options={{
+            presentation:'modal',
+            cardStyle:{borderTopLeftRadius:30,borderTopRightRadius:30},
+            headerShown:false
+          }}
+      />
+      
+    </CartStack.Navigator>
+  )
+}
+const FavoriteStack = createStackNavigator();
+const FavoriteStackScreen = ({ navigation }) => {
+  const signOut = useStoreActions((action) => action.signOut);
+  const handleSignOut = () => {
+    signOut();
+  }
+  return (
+    <FavoriteStack.Navigator>
+      <FavoriteStack.Screen
+          name={"Fav"}
+          component={Favorite}
+          options={{
+            header: props => <Header {...props} />,
+            headerShadowVisible:false,
+            //headerShown:false
+          }}
+      />
+      <HomeStack.Screen
+          name={"Profile"}
+          component={Profile}
+          options={{
+            presentation:'modal',
+            cardStyle:{borderTopLeftRadius:30,borderTopRightRadius:30},
+            headerShown:false
+          }}
+      />
+      
+    </FavoriteStack.Navigator>
+  )
+}
+const DiscountStack = createStackNavigator();
+const DiscountStackScreen = ({ navigation }) => {
+  const signOut = useStoreActions((action) => action.signOut);
+  const handleSignOut = () => {
+    signOut();
+  }
+  return (
+    <DiscountStack.Navigator>
+      <DiscountStack.Screen
+          name={"Discount"}
+          component={Discount}
+          options={{
+            header: props => <Header {...props} />,
+            headerShadowVisible:false,
+            //headerShown:false
+          }}
+      />
+      
+    </DiscountStack.Navigator>
+  )
+}
 
 const TabStack = createBottomTabNavigator();
-const TabsScreen = () => {
+const TabsScreen = (navigation) => {
   const tabOffsetValue = React.useRef(new Animated.Value(getWith())).current;
-  
+  const [shownProfile,setShownProfile] = React.useState(false);
   return (
     <>
     <TabStack.Navigator screenOptions={{
@@ -130,8 +274,8 @@ const TabsScreen = () => {
       
       }}>
       <TabStack.Screen
-          name={"Home"}
-          component={Home}
+          name={"HomeStack"}
+          component={HomeStackScreen}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
@@ -152,7 +296,7 @@ const TabsScreen = () => {
       />
       <TabStack.Screen
           name={"Favo"}
-          component={Favorite}
+          component={FavoriteStackScreen}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
@@ -173,7 +317,7 @@ const TabsScreen = () => {
       />
       <TabStack.Screen
           name={"me"}
-          component={Menu}
+          component={MenuStackScreen}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
@@ -194,7 +338,7 @@ const TabsScreen = () => {
       />
       <TabStack.Screen
           name={"Dis"}
-          component={Discount}
+          component={DiscountStackScreen}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Weather</Text>,
             tabBarIcon: ({ focused }) => (
@@ -216,7 +360,7 @@ const TabsScreen = () => {
       />
       <TabStack.Screen
           name={"cart"}
-          component={Cart}
+          component={CartStackScreen}
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Pizza</Text>,
             tabBarIcon: ({ focused }) => (
@@ -263,18 +407,26 @@ const TabsScreen = () => {
 
 const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => {
+  
+  
   return (
     <DrawerStack.Navigator drawerContent={props => <DrawerContent {...props} />} screenOptions={{
         drawerType: 'front',
-        headerShown: false,
+        headerShown:false
       }} >
       <DrawerStack.Screen
           name={"1"}
           component={TabsScreen}
+          
       />
       <DrawerStack.Screen
-          name={"2"}
-          component={SingleScreen}
+          name={"Profile"}
+          component={Profile}
+          options={{
+            presentation:'fullScreenModal',
+            cardStyle:{borderTopLeftRadius:30,borderTopRightRadius:30},
+            headerShown:false,
+          }}
       />
     </DrawerStack.Navigator>
   )
@@ -282,7 +434,6 @@ const DrawerStackScreen = () => {
 
 const AuthStack = createStackNavigator();
 const AuthenticationStack = (props) => {
-  console.log(props)
   return (
     <AuthStack.Navigator screenOptions={{
       headerShown: false}}

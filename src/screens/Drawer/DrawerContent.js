@@ -30,7 +30,7 @@ const DrawerContent = (props) => {
                         <Icon style={{flex:0.2}} name="earth-outline" size={30} color="#0D5C75" ></Icon>
                         <Text style={{flex:0.5,fontSize:20,fontWeight:'bold',color:'#0D5C75'}}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate('Home_2')}}>
+                    <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate('Profile')}}>
                         <Icon style={{flex:0.2}} name="gift-outline" size={30} color="#0D5C75" ></Icon>
                         <Text style={{flex:0.5,fontSize:20,fontWeight:'bold',color:'#0D5C75'}}>Info</Text>
                     </TouchableOpacity>

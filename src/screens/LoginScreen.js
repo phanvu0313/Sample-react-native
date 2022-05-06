@@ -78,7 +78,7 @@ const LoginScreen = (props) => {
                             </TouchableOpacity>
 
                         </View>
-                        <View style={{width:(windowWidth-20)/5,marginHorizontal:5}}>
+                        <View style={{width:(windowWidth-40)/5,marginHorizontal:5}}>
                         <TouchableOpacity style={{flex:1,borderWidth:1,borderColor:'black',borderRadius:20,borderColor:'#E6DCCD',marginVertical:15}}>
                                 <View style={{flex:1,flexDirection:'row',marginHorizontal:20,alignItems:'center',justifyContent:'center'}}>
                                     <Icon style={{}} name="ios-logo-facebook" size={25} color="#3F2D20" ></Icon>
@@ -86,10 +86,10 @@ const LoginScreen = (props) => {
                                 </View>
                             </TouchableOpacity>
                         </View>
-                        <View style={{width:(windowWidth-20)/5,marginHorizontal:5}}>
+                        <View style={{width:(windowWidth-40)/5,marginHorizontal:5}}>
                             <TouchableOpacity style={{flex:1,borderWidth:1,borderColor:'black',borderRadius:20,borderColor:'#E6DCCD',marginVertical:15}}>
                                 <View style={{flex:1,flexDirection:'row',marginHorizontal:20,alignItems:'center',justifyContent:'center'}}>
-                                    <Icon style={{}} name="ios-logo-google" size={25} color="#3F2D20" ></Icon>
+                                    <Icon style={{}} name="logo-twitter" size={25} color="#3F2D20" ></Icon>
                                     {/* <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>With Google</Text> */}
 
                                 </View>

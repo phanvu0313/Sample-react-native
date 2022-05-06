@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import menu from '../data/menu'
 import Icon from 'react-native-vector-icons/Ionicons';
+import BottomSheet from '../../components/BottomSheet'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -60,6 +61,15 @@ const ItemInMenuFlat = ({ item,setCurrentIndexItem,currentIndexItem }) => {
         </View>
     )
 }
+const bot=()=>{
+    console.log('dcm');
+    return (
+        <View style={[{flex:1,backgroundColor:'red'},StyleSheet.absoluteFill]}>
+            <Text>hihi</Text>
+        </View>
+    )
+}
+
 const Home = ({ navigation: { push } }) => {
     const [currentIndex , setCurrentIndex] = React.useState(1);
     const [currentIndexItem , setCurrentIndexItem] = React.useState(1);
@@ -95,23 +105,7 @@ const Home = ({ navigation: { push } }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <View style={{flex:0.15,flexDirection:'row'}}>
-                    <View style={{flex:1,justifyContent:'center',alignItems:'flex-start',marginLeft:20}}>
-                        <Text style={{fontSize:35}}>
-                            Specials
-                        </Text>
-                        <Text style={{fontSize:35,fontWeight:'bold'}}>
-                            Menu Offers For Your
-                        </Text>
-                    </View>
-                    <View style={{flex:1,justifyContent:'center',alignItems:'flex-end',marginRight:20}}>
-                        <TouchableOpacity>
-                        <Image  style={{ width: 60,height:60}} source = {require('../../assets/avatar.png')}/>
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-                <View style={{flex:0.12}}>
+                <View style={{flex:0.1}}>
                     <FlatList data={menu} renderItem={({ item })=><MenuFlatItems item={item} setCurrentIndex = {setCurrentIndex} currentIndex = {currentIndex} />} 
                         horizontal
                         showsHorizontalScrollIndicator={false} 
@@ -122,11 +116,11 @@ const Home = ({ navigation: { push } }) => {
                         onViewableItemsChanged={toggleMenu()}
                     />
                 </View>
-                <View style={{flex:0.7,marginBottom:10}}>
+                <View style={{flex:0.8,marginBottom:10}}>
                     <Animated.View style={[flipBack,{backgroundColor:'red',flex:1, marginHorizontal:35,marginTop:30,marginBottom:40,borderRadius:30,backgroundColor:'#FFE2CD'},StyleSheet.absoluteFill]}>
                     </Animated.View>
                     <Animated.View style={[{flex:0.9, marginHorizontal:15,marginTop:30,borderRadius:30,backgroundColor:'#F5D3BB'},flipBack]}>
-                        <FlatList data={menu[currentIndex].item} renderItem={({ item })=><ItemInMenuFlat item={item} setCurrentIndexItem = {setCurrentIndexItem} currentIndexItem = {currentIndexItem} />} 
+                        <FlatList data={menu[currentIndex-1].item} renderItem={({ item })=><ItemInMenuFlat item={item} setCurrentIndexItem = {setCurrentIndexItem} currentIndexItem = {currentIndexItem} />} 
                             horizontal
                             showsHorizontalScrollIndicator={false} 
                             bounces={false} 
