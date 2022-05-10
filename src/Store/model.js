@@ -1,8 +1,12 @@
 import { action, thunk } from 'easy-peasy';
 import AsyncStorage from '@react-native-community/async-storage';
 
+
+
 export default {
     /** STATE */
+    isFirstime: false,
+    
     isLoggedin: false,
     /** ACTIONS */
     signInhandle: thunk(async (actions, payload) => {
@@ -27,6 +31,8 @@ export default {
     }),
     signOut: action((state, payload) => {
         state.isLoggedin = false;
+    }),
+    firstTime: action((state,playload) => {
+        state.isFirstime = true;
     })
 }
-

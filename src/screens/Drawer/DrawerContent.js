@@ -4,7 +4,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useStoreActions } from 'easy-peasy';
-import LottieView from 'lottie-react-native';
 
 const DrawerContent = (props) => {
 
@@ -18,7 +17,7 @@ const DrawerContent = (props) => {
         </View>
         <View style={[styles.container,StyleSheet.absoluteFill]}>
            <View style={{flex:0.75,backgroundColor:'#3076e6',borderBottomLeftRadius:70}}>
-                <LottieView source={require('../../assets/Avatar.json')}  autoPlay loop  />
+               
            </View>
 
 

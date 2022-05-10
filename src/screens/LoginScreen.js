@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text,StyleSheet,Dimensions,TouchableWithoutFeedback,Animated } from 'react-native'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text,StyleSheet,Dimensions,TouchableWithoutFeedback,Animated,Image,TouchableOpacity,TextInput ,Button} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {Keyboard} from "react-native";
-import LottieView from 'lottie-react-native';
 import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import AsyncStorage from '@react-native-community/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { customColors } from '../assets/Colors';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -20,6 +21,8 @@ const LoginScreen = (props) => {
     const [userName, onChangeUserName] = React.useState("");
     const [passWord, onChangePassWord] = React.useState("");
     const [securePass,setSecurePass]= React.useState(true);
+    const [validateEmail,setValidateEmail] = React.useState(false);
+    
 
     const LoginViewAnimation = React.useRef(new Animated.Value(0)).current;
 
@@ -37,123 +40,128 @@ const LoginScreen = (props) => {
           console.log(error)
         }
       }
-    useEffect(() => {
-        Animated.timing(LoginViewAnimation,{
-            duration:1000,
-            toValue:1,
-            useNativeDriver:false}
-            ).start();
+      const clearAppData = async () => {
+        console.log('cleared');
+        try {
+            const value = await AsyncStorage.getItem('isAppFirstLaunched')
+            if (value){
+                await AsyncStorage.removeItem('isAppFirstLaunched')
+            }else{
+                console.log('okok');
+            }
             
-
-      }, []);
+        } catch (error) {
+            console.error('Error clearing app data.',error);
+        }
+      }
     return (
-        <>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{flex:1,backgroundColor:'white'}}>
-            <LinearGradient colors={['#0cebeb', '#20e3b2', '#29ffc6']} style={styles.linearGradient}>
-                <Animated.View style={{flex:0.3,
-                transform: [{
-                    translateY: LoginViewAnimation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [-1000, 0] 
-                    }),
-                  }],}}>
-                        <LottieView source={require('../assets/walk.json')}  autoPlay loop  />
-                </Animated.View>
-                <Animated.View style={[styles.loginView, {
-                    opacity: LoginViewAnimation, 
-                    transform: [{
-                      translateY: LoginViewAnimation.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1000,1] 
-                      }),
-                    }],
-                }]}>
-                    <KeyboardAvoidingView behavior="padding" style={styles.inputArea}>
-                        <View style={{flex:1,justifyContent:'center',borderBottomWidth:1,borderColor:'white'}}>
-                            <View style={{flex:0.5}}>
-                                <TextInput
-                                    color='black'
-                                    selectionColor="black"
-                                    placeholderTextColor="#8c8c8c"
-                                    style={[styles.userName,{marginTop:10}]}
-                                    onChangeText={onChangeUserName}
-                                    value={userName}
-                                    placeholder="User Name"
-                                    returnKeyType="next"
-                                    secureTextEntry={false}
-                                    onSubmitEditing={() => { this.secondTextInput.focus(); }}
-                                />
-                            </View>
-                            <View  style={{flexDirection:'row'}}>
-                                <TextInput
-                                    color='black'
-                                    selectionColor="black"
-                                    placeholderTextColor="#8c8c8c"
-                                    style={[styles.userName,{flex:1,marginRight:0, borderTopRightRadius:0,borderBottomRightRadius:0}]}
-                                    onChangeText={onChangePassWord}
-                                    value={passWord}
-                                    placeholder="Password"
-                                    returnKeyType="done"
-                                    secureTextEntry={securePass ? true : false}
-                                    ref={(input) => { this.secondTextInput = input; }}
-                                />
-                                <View style={{flex:0.1,marginRight:10,backgroundColor:"white",borderTopRightRadius:20,borderBottomRightRadius:20,height:50,  justifyContent:'center',alignItems:'center' }}>
-                                    <Icon  name= {securePass ? "skull-sharp" : "skull-outline" } size={21} color="#009394" 
-                                        onPress={()=>{
-                                            if(securePass){
-                                                setSecurePass(false)
-                                            }else{
-                                                setSecurePass(true)
-                                            }
-                                    }} >
-                                            
-                                    </Icon>
-                                </View>
-
-                            </View>
-
-                        </View>
-                        
-
-                    </KeyboardAvoidingView>
-                    <View style={{flex:0.5}}>
-                        <View style={{flex:0.5,justifyContent:'center',height:windowWidth/10,paddingHorizontal:40}}>
-                            <TouchableOpacity 
-                                onPress={() => {
-                                    loggin()
-                                }} 
-                                style={[styles.logButton,{backgroundColor:'white'}]}>
-                                <Text style={{flex:1,fontSize:17,color:'#1cb1e9',fontWeight:'bold' }}>Log in</Text>
-                                <Icon name="chevron-forward-sharp" size={30} color="#1cb1e9" ></Icon>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{flex:0.1,justifyContent:'center',alignContent:'center',height:windowWidth/8,paddingHorizontal:40}}>
-                            <TouchableOpacity style={styles.logButton}>
-                                <Text style={{flex:1,fontSize:19,fontWeight:'bold',color:'white'}}>Sign up</Text>
-                                <Icon name="chevron-forward-sharp" size={30} color="white" ></Icon>
-                            </TouchableOpacity>
-                        </View>
-                        
-
-                    </View>
-                    <View style={{flex:0.1}}>
-                        <TouchableOpacity style={{alignItems:'center'}}>
-                            <View style={{borderBottomWidth:1,borderColor:'white'}}>
-                                <Text style={{color:'white'}} >Term of use</Text>
-                            </View>
-                            
-                        </TouchableOpacity>
-
+        <SafeAreaView style={styles.container}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <KeyboardAvoidingView behavior='position' style={{flex:1}} keyboardVerticalOffset={-150} >
+            <View style={styles.safeView}>
+                
+                <View style={{flex:0.2,alignItems:'flex-start'}}>
+                    <View style={{justifyContent:'center',marginTop:10}}>
+                        <Text style={{fontWeight:'bold',fontSize:30,color:'#3F2D20'}}>Welcome Back</Text>
+                        <Text style={{fontWeight:'400',fontSize:25,color:'#3F2D20'}}>Sign in to continue</Text>
                     </View>
                     
-                </Animated.View>
-            </LinearGradient>
-        </View>
-        
+                    
+                </View>
+                
+                <View style={{flex:0.8,marginHorizontal:10}}>
+                    <View style={{flex:0.2}}>
+                        <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('../assets/Logo.png')} />
+                    </View>
+                    <View style={{flex:0.6}}>
+                        <View style={{marginVertical:5,flex:1,justifyContent:'center'}}>
+                            <View style={{position:'absolute', left:0,opacity:0.7,borderRadius:15,borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderColor:customColors.primary}}>
+                                <Icon  name = {"md-person"} size={25} color={customColors.primary} ></Icon>
+                            </View>
+                            
+                            <TextInput
+                                color='black'
+                                selectionColor="black"
+                                placeholderTextColor="#8c8c8c"
+                                style={[styles.userName,{}]}
+                                onChangeText={onChangeUserName}
+                                value={userName}
+                                placeholder="User Name"
+                                returnKeyType="next"
+                                secureTextEntry={false}
+                                onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                            />
+
+                        </View>
+                        <View style={{marginVertical:5,flex:1,justifyContent:'center'}}>
+                            <View style={{position:'absolute', left:0,opacity:0.7,borderRadius:15,borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderColor:customColors.primary}}>
+                                <Icon  name = {"ios-key"} size={25} color={customColors.primary} ></Icon>
+                            </View>
+                            <TextInput
+                                color='black'
+                                selectionColor="black"
+                                placeholderTextColor="#8c8c8c"
+                                style={[styles.userName,{}]}
+                                onChangeText={onChangePassWord}
+                                value={passWord}
+                                placeholder="Password"
+                                returnKeyType="done"
+                                secureTextEntry={securePass ? true : false}
+                                ref={(input) => { this.secondTextInput = input; }}
+                            />
+                            <TouchableOpacity onPress={()=>{if(securePass){setSecurePass(false)}else{setSecurePass(true)}}}  style={{alignItems:'flex-end',justifyContent:"center",right:20,position:'absolute'}} >
+                                <Icon name = {securePass?  "ios-eye":"md-eye-off"} size={20} color={customColors.text} ></Icon>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{flex:1,alignItems:'flex-start'}}>
+                            <Button
+                                title="Forgot your password ?"
+                                
+                            />
+
+                        </View>
+                        <View style={{marginVertical:10,flex:0.75,borderRadius:20}}>
+                            <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1,backgroundColor:customColors.primary,borderRadius:40}} 
+                            onPress={()=>{loggin()}}
+                            >
+                                <Text style={{color:'white',fontWeight:'bold',fontSize:20}}>Sign In</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        <View style={{marginVertical:10,flex:0.75,borderRadius:20}}>
+                            <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1,backgroundColor:customColors.primary,borderRadius:40}} 
+                            onPress={()=>{loggin()}}
+                            >
+                                <Text style={{color:'white',fontWeight:'bold',fontSize:20}}>Create an Account</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                        
+
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+                        <TouchableOpacity onPress={()=>{clearAppData()}}>
+                            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                                <Icon  name = {"md-finger-print-outline"} size={60} color={customColors.primary_2} ></Icon>
+                            </View>
+
+                        </TouchableOpacity>
+                        
+                        {/* <TouchableOpacity onPress={()=>{clearAppData()}}>
+                            <Text style={{color:'#84BD93',fontSize:16,fontWeight:'700'}}>  Sign up</Text>
+                        </TouchableOpacity> */}
+
+                    </View>
+
+                </View>
+                
+                
+                
+            </View>
+            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-        {isloggedin ? <LoadingSpinner/>  : null}
-        </>
+        </SafeAreaView>
         
     )
 }
@@ -161,63 +169,29 @@ const LoginScreen = (props) => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
-    linearGradient: {
-        flex: 1,
-        borderRadius: 5,
-      },
-      buttonText: {
-        fontSize: 18,
-        fontFamily: 'Gill Sans',
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-        backgroundColor: 'transparent',
-      },
-      logButton:{
-        height:windowWidth/8,
-        backgroundColor:'#009394',
-        borderRadius:20, 
-        flexDirection:'row' , 
-        alignItems:"center",
-        paddingLeft:130,
-        borderWidth:2.5,
-        borderColor:'white',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.37,
-        shadowRadius: 7.49,
-
-      },
-      userName: {
-        height: 50,
-        marginHorizontal:10,
-        padding: 10,
-        backgroundColor:'white',
-        textAlign: 'center',
-        borderRadius:20,
-        fontSize:19,
-        borderWidth:1,
-        borderColor:'#009394'
-      },
-      inputArea:{
-        flex:0.4,
+    container:{
+        flex:1,
+        backgroundColor:customColors.bg,
+        justifyContent:'center',
+        alignItems:'center'
     },
-    loginView:{
-        flex:0.7,
-       marginHorizontal:10,
-        backgroundColor:'#199FB1',
-        borderRadius:40,
+    safeView:{
+        flex:1,
+        width:windowWidth-40,
+        
+
+    },
+    userName:{
+        //marginHorizontal:20,
+        fontSize:20,
+        borderBottomWidth:1,
+        paddingLeft:windowWidth/7,
+        flex:1,
+        marginRight:0, 
+        borderTopRightRadius:0,
         borderBottomRightRadius:0,
-        borderBottomLeftRadius:0,
-        shadowOffset: {
-            width: 0,
-            height: -5,
-        },
-        shadowOpacity: 0.37,
-        shadowRadius: 7.49,
+        borderBottomWidth:1,
+        borderColor:customColors.textOpacity
 
     }
 });
