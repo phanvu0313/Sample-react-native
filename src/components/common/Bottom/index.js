@@ -5,7 +5,7 @@ const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 const HEIGHT =windowHeight/11
 const TRANS_WIDTH =(windowWidth*8)/30
-const index = (props) => {
+const Main = (props) => {
   return (
     <View style = {styles.box}>
         <View style={[{flex:2/3,backgroundColor:'white'},styles.viewTab]}/>
@@ -23,7 +23,7 @@ const index = (props) => {
   )
 }
 
-export default index
+export default Main
 
 const styles = StyleSheet.create({
     box: {

@@ -171,7 +171,7 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:customColors.bg,
+        backgroundColor:customColors.white,
         justifyContent:'center',
         alignItems:'center'
     },

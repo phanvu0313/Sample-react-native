@@ -6,6 +6,8 @@ const customColors = {
 	text: '#19163D',
 	textOpacity:'#3f3e47',
 	bg: '#E5EBF8',
+	gray:'#979797',
+	white:'#fff',
 
 	med_primary: '#7B44AB',
 	active_bar: '#5C2E88',

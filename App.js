@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,Image } from 'react';
 import {
   StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated,Text
 } from 'react-native';
@@ -117,6 +117,19 @@ const FeedStackScreen = ({ navigation }) => {
     </FeedStack.Navigator>
   )
 }
+const ImageHeader  = props => {
+  return (
+    <View style={{flex:1,backgroundColor:customColors.white}}>
+      <View style={{flex:1}}/>
+        <View style={{flex:1,flexDirection:'row',marginHorizontal:20}}>
+          <Text style={{fontSize:40,color:customColors.primary,fontWeight:'bold'}}>
+            Pay<Text style={{color:customColors.primary_2,fontWeight:'bold'}}>ou</Text>
+          </Text>
+        </View>
+
+    </View>
+  )
+}
 
 const TabStack = createBottomTabNavigator();
 const TabsScreen = ({navigation}) => {
@@ -124,7 +137,7 @@ const TabsScreen = ({navigation}) => {
   return (
     <>
     <TabStack.Navigator screenOptions={{
-      headerShown: false,
+      
       tabBarShowLabel:false,
       tabBarStyle: {...styles.box},
       
@@ -133,19 +146,44 @@ const TabsScreen = ({navigation}) => {
           name={"Hoo"}
           component={HomeStack}
           options={{
-            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            title:'',
+            headerBackground:()=><ImageHeader/>,
+            headerRight: () => (
+              <View style={{width:windowWidth/3,paddingHorizontal:10,paddingVertical:10}}>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"notifications-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"medal-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              
+              
+            ),
+            
+            tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="ios-home" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Ionicons name="home" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
               </View>
             ),
         }} listeners={({navigation,route})=>({
           tabPress: e => {
             Animated.spring(tabOffsetValue,{
-              toValue:getWith()*1,
+              toValue:23,
               useNativeDriver:true,
             }).start()
-
           }
         })}
       />
@@ -155,14 +193,14 @@ const TabsScreen = ({navigation}) => {
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="ios-home" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Ionicons name="wallet" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
               </View>
             ),
         }} listeners={({navigation,route})=>({
           tabPress: e => {
             Animated.spring(tabOffsetValue,{
-              toValue:getWith()*1,
+              toValue:getWith()*3.7,
               useNativeDriver:true,
             }).start()
 
@@ -175,14 +213,14 @@ const TabsScreen = ({navigation}) => {
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="ios-home" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Ionicons name="ios-logo-usd" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
               </View>
             ),
         }} listeners={({navigation,route})=>({
           tabPress: e => {
             Animated.spring(tabOffsetValue,{
-              toValue:getWith()*1,
+              toValue:getWith()*6.5,
               useNativeDriver:true,
             }).start()
 
@@ -195,15 +233,15 @@ const TabsScreen = ({navigation}) => {
           options={{
             tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Weather</Text>,
             tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'50%'}}>
-                   <Ionicons name="rainy" color={focused ? '#00d2ff' : 'gray'} size={focused ? 28 : 26} />
+              <View style={{position:'absolute', top:'40%'}}>
+                   <Ionicons name="calendar" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
               </View>
             
             ),
         }}listeners={({navigation,route})=>({
           tabPress: e => {
             Animated.spring(tabOffsetValue,{
-              toValue:getWith()*7,
+              toValue:getWith()*9.4,
               useNativeDriver:true,
 
             }).start()
@@ -216,8 +254,8 @@ const TabsScreen = ({navigation}) => {
     <Animated.View style={{
       flexDirection:'row',
       height:4,
-      width:((windowWidth-60)/18)*4,
-      left:20,
+      width:(windowWidth-windowWidth/3.5)/12,
+      left:17,
       backgroundColor:customColors.primary_2,
       position:'absolute',
       bottom: windowHeight/11-60,
@@ -229,18 +267,14 @@ const TabsScreen = ({navigation}) => {
       
     </Animated.View>
     <View style={styles.QRstyle}>
-      <TouchableOpacity style={{justifyContent:'center',alignItems:'center'}} onPress={()=>navigation.navigate("QQR")}>
-        <Bottombar/>
-
-      </TouchableOpacity>
-      
+        <Bottombar onPress={()=>navigation.navigate("QQR")}/>
     </View>
     </>
   )
   function getWith(){
-    let width = Dimensions.get('window').width;
-    width = width - 40
-    return width / 18;
+    let width = windowWidth;
+    width = width - width/3.5 - 20
+    return width / 12;
   }
 }
 
@@ -426,7 +460,7 @@ const Well = (props) => {
       {...props}
       >
       {
-          1 ? (
+          isloggedin ? (
             <WellScreen.Screen
                 name={"Dashboard"}
                 component={QRStackScreen}
@@ -475,10 +509,17 @@ const styles = StyleSheet.create({
     position:'absolute',
     height:windowHeight/11,
     borderTopWidth:0,
-    borderRadius:20,
+    borderRadius:10,
     marginRight:windowWidth/3.5,
     paddingHorizontal:20,
     borderBottomRightRadius:0,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: -10,
+      height: 0,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
   },
   QRstyle:{
     bottom:0,
@@ -486,7 +527,8 @@ const styles = StyleSheet.create({
     width:windowWidth/3.5,
     height:windowHeight/11,
     alignItems:'flex-start',
-    position:'absolute'
+    position:'absolute',
+    flexDirection:'row'
     
   },
   lable:{
