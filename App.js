@@ -191,7 +191,33 @@ const TabsScreen = ({navigation}) => {
           name={"Wallet"}
           component={WalletStack}
           options={{
-            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            title:'',
+            headerBackground:()=><ImageHeader/>,
+            headerRight: () => (
+              <View style={{width:windowWidth/3,paddingHorizontal:10,paddingVertical:10}}>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"notifications-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"medal-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              
+              
+            ),
+            
+            tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
               <View style={{position:'absolute', top:'40%'}}>
                    <Ionicons name="wallet" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />

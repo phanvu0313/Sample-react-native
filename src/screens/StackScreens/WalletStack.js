@@ -1,11 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { customColors } from '../../assets/Colors'
+import { createStackNavigator } from '@react-navigation/stack';
+import Main from './Wallet/Main'
+
+const StackScreens = createStackNavigator();
 const WalletStack = () => {
   return (
-    <View style={styles.container}>
-      <Text>WalletStack</Text>
-    </View>
+    <StackScreens.Navigator screenOptions={{headerShown: false}}>
+      <StackScreens.Screen
+          name="main"
+          
+          component={Main}
+      />
+    </StackScreens.Navigator>
   )
 }
 
