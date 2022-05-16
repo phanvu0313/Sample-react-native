@@ -298,6 +298,9 @@ const DrawerStackScreen = () => {
   )
 }
 const QRStack = createStackNavigator();
+const PopTop =()=>{
+  
+}
 const QRStackScreen = () => {
   return (
     <QRStack.Navigator screenOptions={{
@@ -310,6 +313,23 @@ const QRStackScreen = () => {
       <QRStack.Screen
           name={"QQR"}
           component={SingleScreen}
+          options={{
+            headerBackground:()=><View style={{backgroundColor:customColors.white,flex:1,}} />,
+            headerLeft: (props) =>(
+              <View style={{marginLeft:20}}>
+                <TouchableOpacity onPress={()=>props.onPress()}>
+                  <Ionicons  name = {"ios-arrow-back"} size={30} color={customColors.primary} />
+                </TouchableOpacity>
+              </View>
+            ),
+            headerShown:true,
+            title:'Scan & Pay',
+            headerTitleStyle:{
+              fontWeight:'bold',
+              fontSize:30,
+              color:customColors.primary,
+              
+            }}}
       />
     </QRStack.Navigator>
   )

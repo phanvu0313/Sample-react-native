@@ -45,6 +45,7 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-Sample-SampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-SampleTests.release.xcconfig"; path = "Target Support Files/Pods-Sample-SampleTests/Pods-Sample-SampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF0DD9CE28110A9D00C41A2B /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		EFB7F8272831E7AE00504A2F /* libRNQrGenerator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNQrGenerator.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EFB7F8272831E7AE00504A2F /* libRNQrGenerator.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-Sample.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Sample-SampleTests.a */,

@@ -8,6 +8,8 @@ const customColors = {
 	bg: '#E5EBF8',
 	gray:'#979797',
 	white:'#fff',
+	yellow:'#FFA900',
+	pink:'#FF227F',
 
 	med_primary: '#7B44AB',
 	active_bar: '#5C2E88',
