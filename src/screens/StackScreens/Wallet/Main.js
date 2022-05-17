@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,TextInput,TouchableWithoutFeedback,TouchableOpacity,Keyboard,Dimensions,Alert } from 'react-native'
+import { StyleSheet, Text, View,TextInput,TouchableWithoutFeedback,TouchableOpacity,Keyboard,Dimensions,Alert, } from 'react-native'
 import React from 'react'
 import { customColors } from '../../../assets/Colors'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,12 +9,17 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const Main = () => {
-    const [cardList,setCardList] = React.useState([]);
+    const [cardList,setCardList] = React.useState(['1','2','3']);
     const [amount, onChangeAmount] = React.useState("");
     const swipeableRef = React.useRef(null);
 
     const handleAddCard =(fav)=>{
         setCardList([...cardList,fav])
+        
+    }
+    const closeSwipeable = () => {
+        
+        swipeableRef.current.close();
     }
     const handleDeleteCard=(index)=>{
         Alert.alert(
@@ -24,12 +29,13 @@ const Main = () => {
                 
                 {
                     text:'Cancel',
-                    onPress:()=>console.log('cancel')
+                    onPress:()=>{
+                        closeSwipeable();
+                    }
                 },
                 {
                     text:'Delete',
                     onPress:()=>{
-                        
                         let favListTemp=[...cardList]
                         favListTemp.splice(index,1)
                         setCardList(favListTemp)
@@ -41,10 +47,10 @@ const Main = () => {
         )
 
     }
-    const DeleteAction = () =>{
+    const DeleteAction = (props) =>{
         return(
-          <View style={{width:90,alignItems:'center'}}>
-              <TouchableOpacity onPress={()=>handleDeleteCard(0)}>
+          <View style={{width:90,alignItems:'center',top:20}}>
+              <TouchableOpacity onPress={()=>handleDeleteCard(props.index)}>
                   <View style={{justifyContent:'center',alignItems:'center',width:45,height:45}}>
                       <Icon  name = {"close-circle"} size={35} color={customColors.pink} ></Icon>
                   </View>
@@ -55,8 +61,8 @@ const Main = () => {
     const ItemInScrollView = (props) => {
         return(
             <Swipeable
-            renderRightActions={DeleteAction}
-            red={swipeableRef}
+            ref={swipeableRef}
+            renderRightActions={()=>DeleteAction(props)}
             >
                 <View style={[{flex:1,height:90,backgroundColor:props.index % 2 == 0 ? '#FFF3D7':"#BEEAFF",},styles.cardView]}>
                     <View style={{flex:0.3,}}>
@@ -72,7 +78,7 @@ const Main = () => {
                             <Icon  name = {"logo-sass"} size={20} color={'black'} ></Icon>
                         </View>
                         <View style={{flex:1}}>
-                            <Text style={{fontWeight:'bold'}}>--Bank name--</Text>
+                            <Text style={{fontWeight:'bold'}}>--{props.item}--</Text>
 
                         </View>
                         <View style={{flex:1,flexDirection:'row'}}>
@@ -90,7 +96,6 @@ const Main = () => {
 
     }
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
       <View style={{flex:0.2}}>
           <View style={{flex:0.25}}>
@@ -162,35 +167,37 @@ const Main = () => {
           <View style={{flex:0.1,justifyContent:'center',backgroundColor:customColors.white}}>
               <Text style={{fontWeight:'400',fontSize:20,paddingLeft:10}}>Debit From</Text>
           </View>
-          <View style={{flex:0.9,marginTop:10}}>
-              <ScrollView>
+          <View style={{flex:0.9,marginTop:10}} >
+              <ScrollView showsVerticalScrollIndicator={false}>
                   {
                     cardList.map((item,index)=>{
                         return (
-                            <ItemInScrollView key={index} index={index}/>
+                            <ItemInScrollView key={index} index={index} item={item}/>
                         )
                     })
                   }
                 <View style={[{flex:1,height:90,flexDirection:'row',paddingHorizontal:10,paddingVertical:10,borderRadius:10,backgroundColor:"#fff",marginBottom:20,marginHorizontal:10},styles.addView]}>
                     <View style={{flex:0.3,justifyContent:'center',alignItems:'center'}}>
-                        <TouchableOpacity style={{flex:1}} onPress={()=>handleAddCard('hiiii')}>
+                        <TouchableOpacity style={{flex:1}} onPress={()=>handleAddCard(cardList.length+1)}>
                             <View style={{flex:1,alignItems:'center',justifyContent:'center'}} >
                                 <Icon  name = {"md-add-circle-outline"} size={40} color={customColors.primary} ></Icon>
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flex:0.7}}>
+                    <View style={{flex:0.75}}>
                         <Text style={{fontWeight:'bold',fontSize:20,color:customColors.primary}}>Add More</Text>
                     </View>
                     
                 </View>
+                <View style={{height:90}} />
               </ScrollView>
+              {/* <View style={{flex:0.15,backgroundColor:'transparent'}} /> */}
 
           </View>
+          
 
       </View>
     </View>
-    </TouchableWithoutFeedback>
   )
 }
 

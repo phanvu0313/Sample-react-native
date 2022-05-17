@@ -35,7 +35,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import STORE from './src/Store/model';
 import SplashScreen from './src/screens/Splash';
 import Bottombar from './src/components/common/Bottom/Bottombar';
-import BottomBG from './src/components/common/Bottom/index';
 import { customColors } from './src/assets/Colors';
 const store = createStore(STORE);
 const windowHeight = Dimensions.get('window').height;
@@ -506,7 +505,7 @@ const Well = (props) => {
       {...props}
       >
       {
-          isloggedin ? (
+          1 ? (
             <WellScreen.Screen
                 name={"Dashboard"}
                 component={QRStackScreen}

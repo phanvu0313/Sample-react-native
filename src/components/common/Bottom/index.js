@@ -17,8 +17,6 @@ const Main = (props) => {
 
             <View style={{flex:1,backgroundColor:'white'}} />
         </View>
-        
-      
     </View>
   )
 }
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'flex-end',
         height:windowHeight/11,
-        borderRadius:10
+        borderRadius:10,
       },
     viewTab:{
         borderRadius:10,

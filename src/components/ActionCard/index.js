@@ -49,23 +49,30 @@ const index = (props) => {
               <View style={{flex:0.7,flexDirection:'row',justifyContent:'center',alignItems:'center',paddingHorizontal:20}}>
                 <View style={{flex:1/3,justifyContent:'center',alignItems:'center'}}>
                   <TouchableOpacity onPress={props.Send}>
-                    <BlurView blurType='light' style={{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2}}>
-                      <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/send.png')}/>
-                    </BlurView>
+                    <View style={[{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,borderRadius:(HEIGHT_MAX/10)*3.5/2},styles.test]}>
+                      <BlurView blurType='light' style={[{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2},styles.test]}>
+                        <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/send.png')}/>
+                      </BlurView>
+                    </View>
+                    
                   </TouchableOpacity>
                 </View>
                 <View style={{flex:1/3,justifyContent:'center',alignItems:'center'}}>
                   <TouchableOpacity onPress={props.Scan}>
-                    <BlurView blurType='light' style={{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2}}>
-                      <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/Scan.png')}/>
-                    </BlurView>
+                    <View style={[{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,borderRadius:(HEIGHT_MAX/10)*3.5/2},styles.test]}>
+                      <BlurView blurType='light' style={{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2}}>
+                        <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/Scan.png')}/>
+                      </BlurView>
+                    </View>
                   </TouchableOpacity>
                 </View>
                 <View style={{flex:1/3,justifyContent:'center',alignItems:'center'}}>
                   <TouchableOpacity onPress={props.Re}>
-                    <BlurView blurType='light' style={{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2}}>
-                      <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/CirArr.png')}/>
-                    </BlurView>
+                    <View style={[{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,borderRadius:(HEIGHT_MAX/10)*3.5/2},styles.test]}>
+                      <BlurView blurType='light' style={{height:(HEIGHT_MAX/10)*3.5,width:(HEIGHT_MAX/10)*3.5,justifyContent:'center',alignItems:'center',borderRadius:(HEIGHT_MAX/10)*3.5/2}}>
+                        <Image style={{width:25,height:25,resizeMode:'cover'}} source={require('../../assets/CirArr.png')}/>
+                      </BlurView>
+                    </View>
                   </TouchableOpacity>
                 </View>
 
@@ -90,5 +97,14 @@ const index = (props) => {
 export default index
 
 const styles = StyleSheet.create({
+  test:{
+    shadowColor: customColors.primary,
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5.27,
+  }
     
 })
