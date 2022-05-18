@@ -9,7 +9,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 const Main = () => {
-    const [cardList,setCardList] = React.useState(['1','2','3']);
+    const [cardList,setCardList] = React.useState(['1','2']);
     const [amount, onChangeAmount] = React.useState("");
     const swipeableRef = React.useRef(null);
 

@@ -121,9 +121,15 @@ const ImageHeader  = props => {
     <View style={{flex:1,backgroundColor:customColors.white}}>
       <View style={{flex:1}}/>
         <View style={{flex:1,flexDirection:'row',marginHorizontal:20}}>
-          <Text style={{fontSize:40,color:customColors.primary,fontWeight:'bold'}}>
-            Pay<Text style={{color:customColors.primary_2,fontWeight:'bold'}}>ou</Text>
-          </Text>
+
+          {
+            props.his == null ? 
+            <Text style={{fontSize:40,color:customColors.primary,fontWeight:'bold'}}>
+              Pay<Text style={{color:customColors.primary_2,fontWeight:'bold'}}>ou</Text>
+            </Text>
+            : null
+          }
+
         </View>
 
     </View>
@@ -133,6 +139,7 @@ const ImageHeader  = props => {
 const TabStack = createBottomTabNavigator();
 const TabsScreen = ({navigation}) => {
   const tabOffsetValue = React.useRef(new Animated.Value(getWith())).current;
+  const signOut = useStoreActions((action) => action.signOut);
   return (
     <>
     <TabStack.Navigator screenOptions={{
@@ -151,7 +158,7 @@ const TabsScreen = ({navigation}) => {
               <View style={{width:windowWidth/3,paddingHorizontal:10,paddingVertical:10}}>
                 <View style={{flexDirection:'row'}}>
                   <View style={{paddingHorizontal:5}}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={signOut}>
                     <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary} />
                     </TouchableOpacity>
                   </View>
@@ -212,8 +219,6 @@ const TabsScreen = ({navigation}) => {
                   </View>
                 </View>
               </View>
-              
-              
             ),
             
             tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
@@ -236,7 +241,33 @@ const TabsScreen = ({navigation}) => {
           name={"Disco"}
           component={DiscountStack}
           options={{
-            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Home</Text>,
+            title:'',
+            headerBackground:()=><ImageHeader/>,
+            headerRight: () => (
+              <View style={{width:windowWidth/3,paddingHorizontal:10,paddingVertical:10}}>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"notifications-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"medal-outline"} size={25} color={customColors.primary} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              
+              
+            ),
+            
+            tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
               <View style={{position:'absolute', top:'40%'}}>
                    <Ionicons name="ios-logo-usd" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
@@ -256,12 +287,27 @@ const TabsScreen = ({navigation}) => {
           name={"Clenda"}
           component={CalendarStack}
           options={{
-            tabBarLabel: ({focused})=> <Text style={[styles.lable, ]}>Weather</Text>,
+            title:'History',
+            headerBackground:()=><ImageHeader his={true} />,
+            headerRight: () => (
+              <View style={{width:windowWidth/6,paddingHorizontal:10,paddingVertical:10}}>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{paddingHorizontal:5}}>
+                    <TouchableOpacity>
+                    <Ionicons  name = {"filter"} size={30} color={customColors.text } />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              
+              
+            ),
+            
+            tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
               <View style={{position:'absolute', top:'40%'}}>
-                   <Ionicons name="calendar" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
+                   <Ionicons name="ios-calendar" color={focused ? customColors.primary_2 : customColors.gray} size={focused ? 26 : 26} />
               </View>
-            
             ),
         }}listeners={({navigation,route})=>({
           tabPress: e => {
@@ -505,7 +551,7 @@ const Well = (props) => {
       {...props}
       >
       {
-          1 ? (
+        1 ? (
             <WellScreen.Screen
                 name={"Dashboard"}
                 component={QRStackScreen}

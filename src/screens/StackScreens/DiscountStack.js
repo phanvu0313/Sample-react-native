@@ -1,12 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack';
 import { customColors } from '../../assets/Colors'
+import OfferMain from './Offer/OfferMain';
 
+
+const StackScreens = createStackNavigator();
 const DiscountStack = () => {
   return (
-    <View style={styles.container}>
-      <Text>DiscountStack</Text>
-    </View>
+    <StackScreens.Navigator screenOptions={{headerShown: false}}>
+      <StackScreens.Screen
+          name="offermain"
+          
+          component={OfferMain}
+      />
+    </StackScreens.Navigator>
   )
 }
 
