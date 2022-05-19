@@ -2,18 +2,17 @@ import { StyleSheet, Text, View,Modal,Dimensions } from 'react-native'
 import React from 'react'
 import { customColors } from '../../assets/Colors'
 import { BlurView } from '@react-native-community/blur'
+import PropType from 'prop-types'
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Popup = (props) => {
-
-
   return (
-    <Modal transparent visible={props.isFilterOn} animationType='fade'>
+    <Modal transparent visible={props.isOn} animationType='fade'>
         <BlurView blurType='light' >
-            <TouchableWithoutFeedback onPress={()=>props.setIsFilterOn(false)} style={styles.outside}>
-                <TouchableWithoutFeedback style={styles.mainView}>
+            <TouchableWithoutFeedback onPress={()=>props.setIsOn(false)} style={styles.outside}>
+                <TouchableWithoutFeedback style={[styles.mainView,{width:props.width,height:props.height}]}>
                     {props.children}
                 </TouchableWithoutFeedback>
             </TouchableWithoutFeedback>
@@ -41,7 +40,17 @@ const styles = StyleSheet.create({
     mainView:{
         backgroundColor:customColors.white,
         borderRadius:40,
-        height:windowHeight-400,
-        width:windowWidth/1.2
+        
     }
 })
+Popup.propsType = {
+    width:PropType.number,
+    height:PropType.number,
+    isOn:PropType.bool,
+    setIsOn:PropType.func,
+    
+  }
+Popup.defaultProps = {
+    width:300,
+    height:400
+  }

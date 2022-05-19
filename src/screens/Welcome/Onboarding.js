@@ -71,6 +71,7 @@ const Onboarding = (props) => {
             style={{marginTop:35,backgroundColor:customColors.bg}}
             showsHorizontalScrollIndicator={false} 
             pagingEnabled 
+            disableIntervalMomentum
             bounces={false} 
             keyExtractor={(item)=>item.id}
             onMomentumScrollEnd={updateCurrentSlideIndex}

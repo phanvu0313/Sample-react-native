@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,StyleSheet,Dimensions,Image } from 'react-native'
+import { View, Text,StyleSheet,Dimensions,Image,Animated,Easing } from 'react-native'
 import { ScrollView, TouchableOpacity,Switch } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,13 +8,31 @@ import QR from '../components/CameraQR/QR'
 import ImagePicker from 'react-native-image-crop-picker';
 import RNQRGenerator from 'rn-qr-generator';
 
-
 const SingleScreen = ({navigation}) => {
     const [isFlashOn,setIsFlashOn] = React.useState(true)
     const [qrCode,setQrCode] = React.useState('')
     const [image,setImage] = React.useState('')
-    
+    const animatedValue = React.useRef(new Animated.Value(0)).current;
+    const [isTop, setIsTop] = React.useState(true);
 
+    const startAnimation = toValue => {
+        Animated.timing(animatedValue, {
+            toValue,
+            duration: 3000,
+            easing: Easing.linear,
+            useNativeDriver: true
+        }).start(() => {
+            setIsTop(!isTop);
+        })
+    }
+    React.useEffect(() => {
+        startAnimation(isTop ? 1 : 0);
+    }, [isTop]);
+    const translateY = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-150,150 ],
+        extrapolate: 'clamp'
+    })
     const openImage=()=>{
         ImagePicker.openPicker({
             width: 300,
@@ -36,13 +54,7 @@ const SingleScreen = ({navigation}) => {
                 setQrCode(values)
             })
             .catch(error => console.log('Cannot detect QR code in image', error));
-
     }
-    
-
-     
-
-    
     const PressFlash = ()=>{
         setIsFlashOn(!isFlashOn)
     }
@@ -56,7 +68,7 @@ return (
                 <View style={{borderWidth:10,borderRadius:20,borderColor:customColors.primary,width:300,height:300}}>
                     <QR isFlashOn={isFlashOn} setQrCode={setQrCode} ></QR>
                 </View>
-                <View style={styles.middleLine}/>
+                <Animated.View style={[styles.middleLine,{ transform: [{ translateY }] }]}/>
             </View>
             <View style={{flex:0.3}}>
                 <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
@@ -101,7 +113,6 @@ return (
                             <View style={{width:70,height:70,backgroundColor:'white',justifyContent:'center',alignItems:'center',borderRadius:20,backgroundColor:'#DCF7F2'}}>
                                 <Image style={{width:19,height:22,resizeMode:'cover'}} source={require('../assets/SendPri.png')}/>
                             </View>
-                            
                         </TouchableOpacity>
                         <Text style={{fontWeight:'600',marginTop:5}}>Send</Text>
 
@@ -137,11 +148,9 @@ return (
 
 export default SingleScreen
 const styles = StyleSheet.create({
-    //View
     container:{
         flex:1 ,
         backgroundColor:customColors.white,
-        
     },
     middleLine:{
         position:'absolute',
@@ -171,9 +180,5 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.58,
         shadowRadius: 20.00,
         paddingHorizontal:20,
-        
     }
-    
-    
-      
 })

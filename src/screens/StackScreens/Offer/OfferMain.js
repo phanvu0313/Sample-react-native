@@ -187,7 +187,7 @@ const OfferMain = () => {
         </View>
 
     </View>
-    <Popup isFilterOn={isFilterOn} setIsFilterOn={setIsFilterOn}>
+    <Popup isOn={isFilterOn} setIsOn={setIsFilterOn}>
         <View style={styles.containerPopup}>
         {
             listFilter.map((item,index)=>{

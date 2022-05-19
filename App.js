@@ -137,9 +137,12 @@ const ImageHeader  = props => {
 }
 
 const TabStack = createBottomTabNavigator();
-const TabsScreen = ({navigation}) => {
+const TabsScreen = ({navigation},props) => {
   const tabOffsetValue = React.useRef(new Animated.Value(getWith())).current;
   const signOut = useStoreActions((action) => action.signOut);
+  
+
+
   return (
     <>
     <TabStack.Navigator screenOptions={{
@@ -147,8 +150,9 @@ const TabsScreen = ({navigation}) => {
       tabBarShowLabel:false,
       tabBarStyle: {...styles.box},
       
-      }}>
+      }} {...props}>
       <TabStack.Screen
+          
           name={"Hoo"}
           component={HomeStack}
           options={{
@@ -158,26 +162,14 @@ const TabsScreen = ({navigation}) => {
               <View style={{width:windowWidth/3,paddingHorizontal:10,paddingVertical:10}}>
                 <View style={{flexDirection:'row'}}>
                   <View style={{paddingHorizontal:5}}>
-                    <TouchableOpacity onPress={signOut}>
-                    <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary} />
+                    <TouchableOpacity onPress={()=>navigation.openDrawer()}>
+                    <Ionicons  name = {"person-circle-outline"} size={25} color={customColors.primary}/>
                     </TouchableOpacity>
                   </View>
-                  <View style={{paddingHorizontal:5}}>
-                    <TouchableOpacity>
-                    <Ionicons  name = {"notifications-outline"} size={25} color={customColors.primary} />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={{paddingHorizontal:5}}>
-                    <TouchableOpacity>
-                    <Ionicons  name = {"medal-outline"} size={25} color={customColors.primary} />
-                    </TouchableOpacity>
-                  </View>
+                  
                 </View>
               </View>
-              
-              
             ),
-            
             tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
               <View style={{position:'absolute', top:'40%'}}>
@@ -279,7 +271,6 @@ const TabsScreen = ({navigation}) => {
               toValue:getWith()*6.5,
               useNativeDriver:true,
             }).start()
-
           }
         })}
       />
@@ -288,21 +279,7 @@ const TabsScreen = ({navigation}) => {
           component={CalendarStack}
           options={{
             title:'History',
-            headerBackground:()=><ImageHeader his={true} />,
-            headerRight: () => (
-              <View style={{width:windowWidth/6,paddingHorizontal:10,paddingVertical:10}}>
-                <View style={{flexDirection:'row'}}>
-                  <View style={{paddingHorizontal:5}}>
-                    <TouchableOpacity>
-                    <Ionicons  name = {"filter"} size={30} color={customColors.text } />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              
-              
-            ),
-            
+            headerShown:false,
             tabBarLabel: ({focused})=> <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('./src/assets/Logo.png')}/>,
             tabBarIcon: ({ focused }) => (
               <View style={{position:'absolute', top:'40%'}}>
@@ -314,9 +291,7 @@ const TabsScreen = ({navigation}) => {
             Animated.spring(tabOffsetValue,{
               toValue:getWith()*9.4,
               useNativeDriver:true,
-
             }).start()
-
           }
         })}
       />
@@ -356,14 +331,13 @@ const DrawerStackScreen = () => {
     <DrawerStack.Navigator drawerContent={props => <DrawerContent {...props} />} screenOptions={{
         drawerType: 'front',
         headerShown: false,
+        drawerStyle:{
+          width: windowWidth,
+        }
       }} >
       <DrawerStack.Screen
           name={"Home"}
           component={TabsScreen}
-      />
-      <DrawerStack.Screen
-          name={"Home_2"}
-          component={SingleScreen}
       />
     </DrawerStack.Navigator>
   )
@@ -372,14 +346,14 @@ const QRStack = createStackNavigator();
 const PopTop =()=>{
   
 }
-const QRStackScreen = () => {
+const QRStackScreen = ()=> {
   return (
     <QRStack.Navigator screenOptions={{
       headerShown: false,
     }} >
       <QRStack.Screen
-          name={"Home"}
-          component={TabsScreen}
+          name={"Srack"}
+          component={DrawerStackScreen }
       />
       <QRStack.Screen
           name={"QQR"}
@@ -399,7 +373,6 @@ const QRStackScreen = () => {
               fontWeight:'bold',
               fontSize:30,
               color:customColors.primary,
-              
             }}}
       />
     </QRStack.Navigator>
@@ -408,7 +381,7 @@ const QRStackScreen = () => {
 
 const AuthStack = createStackNavigator();
 const AuthenticationStack = (props) => {
-  console.log(props)
+  //console.log('duna',props)
   return (
     <AuthStack.Navigator screenOptions={{
       headerShown: false}}
@@ -486,7 +459,6 @@ const RootStackScreen = (props) => {
       <RootStack.Navigator 
       screenOptions={{
         headerShown: false,
-        
       }}
       {...props}
       >
@@ -551,7 +523,7 @@ const Well = (props) => {
       {...props}
       >
       {
-        1 ? (
+        isloggedin ? (
             <WellScreen.Screen
                 name={"Dashboard"}
                 component={QRStackScreen}

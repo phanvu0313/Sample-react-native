@@ -14,16 +14,14 @@ const QR = (props) => {
     
     return (
         <QRCodeScanner
-        reactivate={true}
-        reactivateTimeout={1000}
-        fadeIn={false}
-        cameraStyle={{height:280,width:280,borderWidth:10,borderRadius:10,borderColor:customColors.black}}
-        onRead={onSuccess}
-        flashMode={props.isFlashOn ? RNCamera.Constants.FlashMode.off: RNCamera.Constants.FlashMode.torch}
+            reactivate={true}
+            reactivateTimeout={1000}
+            fadeIn={false}
+            cameraStyle={{height:280,width:280,borderWidth:10,borderRadius:10,borderColor:customColors.black}}
+            onRead={onSuccess}
+            flashMode={props.isFlashOn ? RNCamera.Constants.FlashMode.off: RNCamera.Constants.FlashMode.torch}
         />
     );
 }
-
 export default QR
-
 const styles = StyleSheet.create({})
