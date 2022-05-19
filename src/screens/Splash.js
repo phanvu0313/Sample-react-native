@@ -3,21 +3,22 @@ import { View, Text,StyleSheet,Image } from 'react-native'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { customColors } from '../assets/Colors';
+import LinearGradient from 'react-native-linear-gradient'
 
 
 
 const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         
-        setTimeout(() => {
+        // setTimeout(() => {
             
-            navigation.navigate("SignIn")
-        }, 800)
+        //     navigation.navigate("SignIn")
+        // }, 800)
         
       }, [])
     return (
-        <View style={{flex:1 ,justifyContent:'center',alignItems:'center', backgroundColor:customColors.bg}}>
-            <Image style={{width:310,height:80,resizeMode:'cover'}} source={require('../assets/Logo.png')} />
+        <View style={styles.container}>
+            <Text style={{fontWeight:'bold',fontSize:70}}>R I <Text style={{color:customColors.yellow}}>O</Text></Text>
         </View>
 
         
@@ -29,19 +30,11 @@ export default SplashScreen
 
 
 const styles = StyleSheet.create({
-    linearGradient: {
-        flex: 1,
-        paddingLeft: 15,
-        paddingRight: 15,
-        borderRadius: 5
-      },
-      buttonText: {
-        fontSize: 18,
-        fontFamily: 'Gill Sans',
-        textAlign: 'center',
-        margin: 10,
-        color: '#ffffff',
-        backgroundColor: 'transparent',
-      },
+    container:{
+        flex:1,
+        backgroundColor:customColors.bg,
+        justifyContent:'center',
+        alignItems:'center'
+    }
       
 });

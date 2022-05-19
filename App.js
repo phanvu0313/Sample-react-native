@@ -462,7 +462,7 @@ const RootStackScreen = (props) => {
       }}
       {...props}
       >
-        {isAppFirstLaunched  && (
+        {1  && (
             <RootStack.Screen name={"Welcome"}component={WelcomeScreen}
             options={{
               title: "wel"

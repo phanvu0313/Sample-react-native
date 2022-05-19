@@ -5,11 +5,12 @@ const customColors = {
 
 	text: '#19163D',
 	textOpacity:'#3f3e47',
-	bg: '#E5EBF8',
+	bg: 'white',
 	gray:'#979797',
 	white:'#fff',
 	yellow:'#FFA900',
 	pink:'#FF227F',
+	yellow:'#FFBC41',
 
 	med_primary: '#7B44AB',
 	active_bar: '#5C2E88',

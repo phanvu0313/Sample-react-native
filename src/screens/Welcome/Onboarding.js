@@ -35,23 +35,13 @@ const Onboarding = (props) => {
         )
     }
     const goToNextSlide = () => {
-        const nextSlideIndex = currentIndex + 1;
-        if(currentIndex<2){
-            const offset = nextSlideIndex * ITEM_SIZE;
-            ref?.current.scrollToOffset({offset});
-            setCurrentIndex(currentIndex+1)
-        }
+        
         if(currentIndex==2){
             props.onPress()
         }
     };
     const goToBackSlide = () => {
-        const nextSlideIndex = currentIndex - 1;
-        if(currentIndex>0){
-            const offset = nextSlideIndex * ITEM_SIZE;
-            ref?.current.scrollToOffset({offset});
-            setCurrentIndex(currentIndex-1)
-        }
+        
     };
     const updateCurrentSlideIndex = e => {
         const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -61,71 +51,8 @@ const Onboarding = (props) => {
 
     return (
         <>
-        <View style={[styles.container,{}]}>
-            <FlatList data={Slide} renderItem={({ item,index })=><OnboardingItem index={index} item={item} scrollX={scrollX} /> } 
-            //snapToInterval
-            horizontal 
-            snapToInterval={ITEM_SIZE}
-            snapToAlignment='start'
-            ref = {ref}
-            style={{marginTop:35,backgroundColor:customColors.bg}}
-            showsHorizontalScrollIndicator={false} 
-            pagingEnabled 
-            disableIntervalMomentum
-            bounces={false} 
-            keyExtractor={(item)=>item.id}
-            onMomentumScrollEnd={updateCurrentSlideIndex}
-            onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-                { useNativeDriver: false }
-              )}
-            scrollEventThrottle={16}
-            />
-            
-            
-           
-        </View>
-        <View style={{flex:0.3,backgroundColor:'transparent'}}>
-            <View style={{flex:0.6,justifyContent:'flex-start',alignItems:'center'}}>
-                <Text style={{color:customColors.primary,fontSize:25,fontWeight:'bold',marginVertical:10}}>
-                    Safe Transaction
-                </Text>
-                <Text style={{color:customColors.primary,fontSize:20,fontWeight:'400'}}>
-                    Forgot to bring your wallet
-                </Text>
-                <Text style={{color:customColors.primary,fontSize:20,fontWeight:'400'}}>
-                    when you are shopping?
-                </Text>
-
-            </View>
-            
-            <View style={{flex:0.3,flexDirection:'row',width:windowWidth-80}}>
-                <View style={{flex:1,alignItems:'center'}}>
-                    <TouchableOpacity onPress={goToBackSlide} disabled={currentIndex==0 ? true:false} backgroundColor={currentIndex==0 ? 'white':'black'} >
-                        <View  style={[{opacity:currentIndex==0 ? 0.4:1},styles.button]}>
-                            <Icon name="ios-chevron-back-outline" size={30} color={customColors.text} ></Icon>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={{flex:1,alignItems:'center',paddingHorizontal:20,marginTop:20}}>
-                    <Footer style={{flex:1}}/>
-                </View>
-                <View style={{flex:1,alignItems:'center'}}>
-                    <TouchableOpacity onPress={goToNextSlide}  >
-                        <View  style={styles.button}>
-                            <Icon name="ios-chevron-forward-outline" size={30} color={customColors.text} ></Icon>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-
-        </View>
         
         </>
-
-        
-        
     )
 }
 
