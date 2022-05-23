@@ -57,50 +57,36 @@ const LoginScreen = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <KeyboardAvoidingView behavior='position' style={{flex:1}} keyboardVerticalOffset={-150} >
+            
             <View style={styles.safeView}>
-                
-                <View style={{flex:0.2,alignItems:'flex-start'}}>
-                    <View style={{justifyContent:'center',marginTop:10}}>
-                        <Text style={{fontWeight:'bold',fontSize:30,color:'#3F2D20'}}>Welcome Back</Text>
-                        <Text style={{fontWeight:'400',fontSize:25,color:'#3F2D20'}}>Sign in to continue</Text>
+                <View style={{flex:1,marginHorizontal:10}}>
+                    <View style={{flex:0.1,justifyContent:'center'}}>
+                        <Text style={{fontWeight:'500',fontSize:30}}>Login</Text>
                     </View>
-                    
-                    
-                </View>
-                
-                <View style={{flex:0.8,marginHorizontal:10}}>
-                    <View style={{flex:0.2}}>
-                        <Image style={{width:155,height:40,resizeMode:'cover'}} source={require('../assets/Logo.png')} />
-                    </View>
-                    <View style={{flex:0.6}}>
-                        <View style={{marginVertical:5,flex:1,justifyContent:'center'}}>
-                            <View style={{position:'absolute', left:0,opacity:0.7,borderRadius:15,borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderColor:customColors.primary}}>
-                                <Icon  name = {"md-person"} size={25} color={customColors.primary} ></Icon>
-                            </View>
-                            
+                    <View style={{flex:0.7}}>
+                        <View style={{marginVertical:5,flex:0.2,justifyContent:'center'}}>
                             <TextInput
                                 color='black'
                                 selectionColor="black"
-                                placeholderTextColor="#8c8c8c"
+                                placeholderTextColor="#A8A8A8"
                                 style={[styles.userName,{}]}
                                 onChangeText={onChangeUserName}
                                 value={userName}
-                                placeholder="User Name"
+                                placeholder="E-mail"
                                 returnKeyType="next"
                                 secureTextEntry={false}
                                 onSubmitEditing={() => { this.secondTextInput.focus(); }}
                             />
-
-                        </View>
-                        <View style={{marginVertical:5,flex:1,justifyContent:'center'}}>
-                            <View style={{position:'absolute', left:0,opacity:0.7,borderRadius:15,borderWidth:1,paddingHorizontal:10,paddingVertical:10,borderColor:customColors.primary}}>
-                                <Icon  name = {"ios-key"} size={25} color={customColors.primary} ></Icon>
+                            <View style={{position:'absolute', left:0,opacity:0.7,borderRadius:15,paddingHorizontal:10,paddingVertical:10}}>
+                                <Icon  name = {"md-person"} size={25} color={"#A8A8A8"} ></Icon>
                             </View>
+                        </View>
+                        <View style={{marginVertical:5,flex:0.2,justifyContent:'flex-start'}}>
+                            
                             <TextInput
                                 color='black'
                                 selectionColor="black"
-                                placeholderTextColor="#8c8c8c"
+                                placeholderTextColor="#A8A8A8"
                                 style={[styles.userName,{}]}
                                 onChangeText={onChangePassWord}
                                 value={passWord}
@@ -109,48 +95,57 @@ const LoginScreen = (props) => {
                                 secureTextEntry={securePass ? true : false}
                                 ref={(input) => { this.secondTextInput = input; }}
                             />
-                            <TouchableOpacity onPress={()=>{if(securePass){setSecurePass(false)}else{setSecurePass(true)}}}  style={{alignItems:'flex-end',justifyContent:"center",right:20,position:'absolute'}} >
-                                <Icon name = {securePass?  "ios-eye":"md-eye-off"} size={20} color={customColors.text} ></Icon>
+                            <View style={{position:'absolute', left:0,opacity:0.7,paddingHorizontal:10,paddingVertical:15,}}>
+                                <Icon  name = {"ios-key"} size={25} color={"#A8A8A8"} ></Icon>
+                            </View>
+                            <TouchableOpacity onPress={()=>{if(securePass){setSecurePass(false)}else{setSecurePass(true)}}}  style={{alignItems:'flex-end',marginVertical:15,right:20,position:'absolute'}} >
+                                <Icon name = {securePass?  "ios-eye":"md-eye-off"} size={20} color={customColors.text} style={{opacity:0.5}}></Icon>
                             </TouchableOpacity>
 
                         </View>
-                        <View style={{flex:1,alignItems:'flex-start'}}>
+                        <View style={{flex:0.1,alignItems:'flex-end'}}>
                             <Button
-                                title="Forgot your password ?"
-                                
+                                title="Quên mật khẩu?"
                             />
-
                         </View>
-                        <View style={{marginVertical:10,flex:0.75,borderRadius:20}}>
-                            <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1,backgroundColor:customColors.primary,borderRadius:40}} 
-                            onPress={()=>{loggin()}}
-                            >
-                                <Text style={{color:'white',fontWeight:'bold',fontSize:20}}>Sign In</Text>
-                            </TouchableOpacity>
+                        <View style={{flex:0.5}}>
+                            <View style={{marginVertical:10,flex:0.3,borderRadius:20}}>
+                                <TouchableOpacity style={styles.button} 
+                                onPress={()=>{loggin()}}
+                                >
+                                    <Text style={{color:'black',fontWeight:'bold',fontSize:20}}>Đăng Nhập</Text>
+                                </TouchableOpacity>
 
-                        </View>
-                        <View style={{marginVertical:10,flex:0.75,borderRadius:20}}>
-                            <TouchableOpacity style={{justifyContent:'center',alignItems:'center',flex:1,backgroundColor:customColors.primary,borderRadius:40}} 
-                            onPress={()=>{loggin()}}
-                            >
-                                <Text style={{color:'white',fontWeight:'bold',fontSize:20}}>Create an Account</Text>
-                            </TouchableOpacity>
+                            </View>
+                            <View style={{marginVertical:10,flex:0.3,borderRadius:20}}>
+                                <TouchableOpacity style={styles.button} 
+                                onPress={()=>{loggin()}}
+                                >
+                                    <Text style={{color:'black',fontWeight:'bold',fontSize:20}}>Tạo Tài Khoản</Text>
+                                </TouchableOpacity>
 
-                        </View>
-                        
-
-                    </View>
-                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
-                        <TouchableOpacity onPress={()=>{clearAppData()}}>
-                            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                                <Icon  name = {"md-finger-print-outline"} size={60} color={customColors.primary_2} ></Icon>
                             </View>
 
-                        </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{flex:0.2,justifyContent:'center',alignItems:'center'}}>
+                        <View style={{flex:0.2}}>
+                            <Text>Đăng nhập bằng </Text>
+                        </View>
+                        <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',flex:0.9}}>
+                            <TouchableOpacity onPress={()=>{clearAppData()}}>
+                                <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'#4b4bde',paddingVertical:10,paddingHorizontal:10,borderRadius:10}}>
+                                    <Icon  name = {"logo-facebook"} size={35} color={customColors.white} ></Icon>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{width:10}}></View>
+                            <TouchableOpacity onPress={()=>{clearAppData()}}>
+                                <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'#f25246',paddingVertical:10,paddingHorizontal:10,borderRadius:10}}>
+                                    <Icon  name = {"logo-google"} size={35} color={customColors.bg} ></Icon>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                         
-                        {/* <TouchableOpacity onPress={()=>{clearAppData()}}>
-                            <Text style={{color:'#84BD93',fontSize:16,fontWeight:'700'}}>  Sign up</Text>
-                        </TouchableOpacity> */}
 
                     </View>
 
@@ -159,7 +154,6 @@ const LoginScreen = (props) => {
                 
                 
             </View>
-            </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
         </SafeAreaView>
         
@@ -171,7 +165,7 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:customColors.white,
+        backgroundColor:'#FBFBFD',
         justifyContent:'center',
         alignItems:'center'
     },
@@ -182,16 +176,25 @@ const styles = StyleSheet.create({
 
     },
     userName:{
-        //marginHorizontal:20,
         fontSize:20,
-        borderBottomWidth:1,
         paddingLeft:windowWidth/7,
-        flex:1,
-        marginRight:0, 
-        borderTopRightRadius:0,
-        borderBottomRightRadius:0,
-        borderBottomWidth:1,
-        borderColor:customColors.textOpacity
+        borderRadius:20,
+        backgroundColor:customColors.bg,
+        height:60,
 
+    },
+    button:{
+        justifyContent:'center',
+        alignItems:'center',
+        flex:0.7,
+        backgroundColor:customColors.yellow,
+        borderRadius:40,
+        shadowColor: customColors.yellow,
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.64,
+        shadowRadius: 10.27,
     }
 });

@@ -1,28 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { customColors } from '../../assets/Colors'
 import { createStackNavigator } from '@react-navigation/stack';
-import Main from './Wallet/Main'
+import ProfileMain from './Profile/ProfileMain';
+
+
 
 const StackScreens = createStackNavigator();
-const WalletStack = () => {
+const ProfileStack = () => {
   return (
     <StackScreens.Navigator screenOptions={{headerShown: false}}>
       <StackScreens.Screen
           name="main"
           
-          component={Main}
+          component={ProfileMain}
       />
     </StackScreens.Navigator>
   )
 }
 
-export default WalletStack
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:customColors.bg
-    }
-})
+export default ProfileStack
+
+const styles = StyleSheet.create({})

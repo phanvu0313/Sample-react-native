@@ -21,8 +21,8 @@ const DrawerContent = (props) => {
     const signOut = useStoreActions((action) => action.signOut);
     return (
         <View style={styles.container}>
-            <View style={{flex:0.05}} />
-            <View style={{flex:0.2,backgroundColor:'#434dde'}}>
+            <View style={{flex:0.05,backgroundColor:'#434dde'}} />
+            <View style={{flex:0.2,backgroundColor:'#434dde',borderBottomRightRadius:100}}>
                 <View style={{flex:0.3,alignItems:'flex-end',marginHorizontal:20,justifyContent:'flex-end'}} >
                     <TouchableOpacity>
                         <Icon name= {"md-share-social-outline"} size={30} color={customColors.white}></Icon>
@@ -31,8 +31,8 @@ const DrawerContent = (props) => {
                 <View style={{flex:0.7,marginHorizontal:20}}>
                     <View style={{flex:1,flexDirection:'row'}}>
                         <View style={{flex:1/3,alignItems:'center'}} >
-                            <View style={{width:100,height:100,borderRadius:100,backgroundColor:'white',justifyContent:'center',alignItems:'center'}}>
-                                <Image style={{width:70,height:70,resizeMode:'cover'}} source={require('../../assets/ava.png')} />
+                            <View style={{width:90,height:90,borderRadius:100,backgroundColor:'white',justifyContent:'center',alignItems:'center'}}>
+                                <Image style={{width:60,height:60,resizeMode:'cover'}} source={require('../../assets/ava.png')} />
                             </View>
                         </View>
                         <View style={{flex:2/3,justifyContent:'center',marginBottom:20}} >
@@ -174,7 +174,7 @@ export default DrawerContent
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor:customColors.primary
+      backgroundColor:customColors.yellow
     },
     logOut:{
         flexDirection:'row', 

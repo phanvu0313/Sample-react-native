@@ -51,7 +51,10 @@ const Onboarding = (props) => {
 
     return (
         <>
-        
+        <View>
+            
+        </View>
+
         </>
     )
 }
