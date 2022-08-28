@@ -6,12 +6,16 @@ const customColors = {
 	text: '#19163D',
 	textOpacity:'#3f3e47',
 	bg: '#fff',
-	gray:'#979797',
-	white:'#F4F4F4',
+	gray:'#666666',
+	lightblack:'#343434',
+	white:'#fff',
 	yellow:'#FFA900',
 	pink:'#FF227F',
 	yellow:'#FFBC41',
 	black:'#000',
+	red:'#F42023',
+	darkgray:'#656565',
+
 
 	med_primary: '#7B44AB',
 	active_bar: '#5C2E88',

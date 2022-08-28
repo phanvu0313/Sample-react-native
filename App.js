@@ -1,17 +1,20 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect,Image } from 'react';
-import {
-  StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated,Text
-} from 'react-native';
+import {StatusBar, Settings, TouchableOpacity,Dimensions,StyleSheet,View,Animated}  from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-community/async-storage';
 import { createStore, StoreProvider, useStoreState, useStoreActions } from 'easy-peasy';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator,
+  useDrawerProgress,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+  useDrawerStatus, } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 /** Screens */
 import Splash from './src/screens/Splash'
 import DrawerContent from './src/screens/Drawer/DrawerContent'
@@ -35,6 +38,8 @@ import { customColors } from './src/assets/Colors';
 import SearchStack from './src/screens/StackScreens/SearchStack';
 import NotificationStack from './src/screens/StackScreens/NotificationStack';
 import ProfileStack from './src/screens/StackScreens/ProfileStack';
+import ProfileScreen from './src/screens/ProfileScreen';
+import { TouchableWithoutFeedback,TouchableHighlight} from 'react-native-gesture-handler';
 const store = createStore(STORE);
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -115,206 +120,88 @@ const FeedStackScreen = ({ navigation }) => {
     </FeedStack.Navigator>
   )
 }
-const ImageHeader  = props => {
-  let colorStart = customColors.yellow
-  let colorEnd = customColors.yellow
-  
-  return (
-    <View style={{flex:1,backgroundColor:customColors.bg}}>
-      <LinearGradient start={{x: 1, y: 0}} end={{x: 0, y: 0}} colors={[colorStart, colorEnd] } style={{height:windowHeight/5,bottom:windowHeight/5/2,backgroundColor:colorStart,borderBottomLeftRadius:150,borderBottomRightRadius:10}}>
-      
-      </LinearGradient>
-    </View>
+const tabbar=(iconName)=>
+  ({focused})=>(
+    <TouchableHighlight>
+      <Ionicons name= {iconName} size={25} color={focused ? 'red' : '#ddd'}></Ionicons>
+    </TouchableHighlight>
   )
-}
-const headderItems=(nameIcon,navigation)=>{
-  
-  return(
-    <View style={{paddingHorizontal:10}}>
-      <TouchableOpacity onPress={()=>navigation.openDrawer()}>
-            <Ionicons  name = {nameIcon} size={30} color={customColors.black}/>
-          </TouchableOpacity>
-    </View>
 
-  )
-  
-
-}
 
 const TabStack = createBottomTabNavigator();
 const TabsScreen = ({navigation},props) => {
+ 
   const tabOffsetValue = React.useRef(new Animated.Value(0)).current;
   const signOut = useStoreActions((action) => action.signOut);
-  
-
 
   return (
-    <>
-    <TabStack.Navigator screenOptions={{
-      
-      tabBarShowLabel:false,
-      tabBarStyle: {...styles.box},
-      
-      }} {...props}>
+    <Animated.View style={[{backgroundColor:'red',flex:1}]}>
+    <TabStack.Navigator
+      tabBarPosition='bottom'
+      screenOptions={{
+        unmountOnBlur:true,
+        tabBarShowLabel:false,
+        headerShown:false,
+        tabBarStyle: {...styles.box},
+        }} {...props}>
       <TabStack.Screen
-          
           name={"Hoo"}
+          id={1}
           component={HomeStack}
-          options={{
-            title:'RIO',
-            headerBackground:()=><ImageHeader />,
-            headerRight: () => (
-              <View style={{paddingHorizontal:10,marginRight:10}}>
-                <TouchableOpacity onPress={()=>console.log('Search Pressed')}>
-                      <Ionicons  name = {'ios-search-outline'} size={30} color={customColors.black}/>
-                    </TouchableOpacity>
-              </View>
-            ),
-            headerLeft: () => (
-              headderItems('ios-menu',navigation)
-            ),
-            tabBarIcon: ({ focused }) => (
-              <>
-              <Animated.View style={[styles.bottomIcon,{backgroundColor:customColors.yellow,paddingHorizontal:30,paddingVertical:30},{transform:[{translateX:tabOffsetValue}]}]}/>
-              <Animated.View style={[styles.bottomIcon,]}>
-                   <Ionicons name="home-outline" color={focused ? customColors.black : customColors.gray} size={focused ? 26 : 26} />
-              </Animated.View>
-              </>
-            ),
-        }} listeners={({navigation,route})=>({
-          tabPress: e => {
-            Animated.spring(tabOffsetValue,{
-              toValue:0,
-              useNativeDriver:true,
-            }).start()
-          }
-        })}
+          options={{ tabBarIcon: tabbar("ios-skull") }}
+          
       />
       <TabStack.Screen
           name={"Tìm Kiếm"}
           component={SearchStack}
-          options={{
-            title:'Đặt Hàng',
-            headerBackground:()=><ImageHeader />,
-            headerRight: () => (
-              <View style={{paddingHorizontal:10,marginRight:10}}>
-                <TouchableOpacity onPress={()=>console.log('Search Pressed')}>
-                      <Ionicons  name = {'ios-cart-outline'} size={30} color={customColors.black}/>
-                    </TouchableOpacity>
-              </View>
-            ),
-            headerLeft: () => (
-              headderItems('ios-menu',navigation)
-            ),
-            tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'15%',paddingVertical:15,paddingHorizontal:15}}>
-                   <Ionicons name="ios-cart-outline" color={focused ? customColors.black : customColors.gray} size={focused ? 26 : 26} />
-              </View>
-            ),
-        }} listeners={({navigation,route})=>({
-          tabPress: e => {
-            Animated.spring(tabOffsetValue,{
-              toValue:getWith(),
-              useNativeDriver:true,
-            }).start()
-
-          }
-        })}
+          options={{ tabBarIcon: tabbar('radio-button-on') }}
+          
       />
       <TabStack.Screen
           name={"Noti"}
           component={NotificationStack}
-          options={{
-            title:'Thông Báo',
-            headerBackground:()=><ImageHeader />,
-            headerRight: () => (
-              <View style={{paddingHorizontal:10,marginRight:10}}>
-                <TouchableOpacity onPress={()=>console.log('Search Pressed')}>
-                      <Ionicons  name = {'ios-search-outline'} size={30} color={customColors.black}/>
-                    </TouchableOpacity>
-              </View>
-            ),
-            headerLeft: () => (
-              headderItems('ios-menu',navigation)
-            ),
-            tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'15%',paddingVertical:15,paddingHorizontal:15}}>
-                   <Ionicons name="notifications-outline" color={focused ? customColors.black : customColors.gray} size={focused ? 26 : 26} />
-              </View>
-            ),
-        }} listeners={({navigation,route})=>({
-          tabPress: e => {
-            Animated.spring(tabOffsetValue,{
-              toValue:getWith()*2,
-              useNativeDriver:true,
-            }).start()
-          }
-        })}
+          options={{ tabBarIcon: tabbar("ios-paw")}}
+          
       />
       <TabStack.Screen
           name={"Pro"}
           component={ProfileStack}
-          options={{
-            title:'Lịch Sử',
-            headerBackground:()=><ImageHeader />,
-            headerRight: () => (
-              <View style={{paddingHorizontal:10,marginRight:10}}>
-                <TouchableOpacity onPress={()=>console.log('Search Pressed')}>
-                      <Ionicons  name = {'ios-search-outline'} size={30} color={customColors.black}/>
-                    </TouchableOpacity>
-              </View>
-            ),
-            headerLeft: () => (
-              headderItems('ios-menu',navigation)
-            ),
-            tabBarIcon: ({ focused }) => (
-              <View style={{position:'absolute', top:'15%',paddingVertical:15,paddingHorizontal:15,}}>
-                   <Ionicons name="person-outline" color={focused ? customColors.black : customColors.gray} size={focused ? 26 : 26} />
-              </View>
-            ),
-        }}listeners={({navigation,route})=>({
-          tabPress: e => {
-            Animated.spring(tabOffsetValue,{
-              toValue:getWith()*3,
-              useNativeDriver:true,
-            }).start()
-          }
-        })}
+          options={{  tabBarIcon: tabbar('ios-settings')}}
+          
       />
       
     </TabStack.Navigator>
     
-    </>
+    </Animated.View>
   )
-  function getWith(){
-    let width = windowWidth-40;
-    width = (width /4)
-    return width;
-  }
 }
 
 
 const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => {
   return (
-    <DrawerStack.Navigator drawerContent={props => <DrawerContent {...props} />} screenOptions={{
+    <DrawerStack.Navigator drawerContent={props =>  <DrawerContent {...props} />} screenOptions={{
         drawerType: 'front',
+        overlayColor:null,
         headerShown: false,
         drawerStyle:{
-          width:windowWidth*0.8
+          width:windowWidth*0.66
         }
-      }} >
-      <DrawerStack.Screen
+      }}>
+      <DrawerStack.Screen 
           name={"Home"}
           component={TabsScreen}
+      />
+      <DrawerStack.Screen 
+      animationEnabled
+          name={"Sett"}
+          component={SettingsScreen}
       />
     </DrawerStack.Navigator>
   )
 }
 const QRStack = createStackNavigator();
-const PopTop =()=>{
-  
-}
+
 const QRStackScreen = ()=> {
   return (
     <QRStack.Navigator screenOptions={{
@@ -323,6 +210,10 @@ const QRStackScreen = ()=> {
       <QRStack.Screen
           name={"Srack"}
           component={DrawerStackScreen }
+      />
+      <QRStack.Screen
+          name={"Profile"}
+          component={ProfileScreen }
       />
       <QRStack.Screen
           name={"QQR"}
@@ -373,6 +264,7 @@ const AuthenticationStack = (props) => {
           name={"SignUp"}
           component={SignUpScreen}
       />
+      
     </AuthStack.Navigator>
     
   )
@@ -481,7 +373,6 @@ const Well = (props) => {
           console.error('Error clearing app data.');
       }
     }
-
     return (
       
       <WellScreen.Navigator 
@@ -491,7 +382,7 @@ const Well = (props) => {
       {...props}
       >
       {
-        isloggedin ? (
+        1? (
             <WellScreen.Screen
                 name={"Dashboard"}
                 component={QRStackScreen}
@@ -537,16 +428,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    position:'absolute',
-    height:windowHeight/12,
-    borderRadius:100,
-    backgroundColor:customColors.white,
-    bottom:20,
-    marginHorizontal:20,
-    borderWidth:1,
-    borderColor:'#F4F4F4',
-    borderTopWidth:1,
-    borderTopColor:'#F4F4F4'
+    height:windowHeight/10,
+    backgroundColor:customColors.black,
+    borderTopWidth:0,
     
   },
   bottomIcon:{

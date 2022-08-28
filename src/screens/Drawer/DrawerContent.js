@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useStoreActions } from 'easy-peasy';
 import { customColors } from '../../assets/Colors';
+import { useDrawerProgress } from '@react-navigation/drawer';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -45,7 +46,7 @@ const DrawerContent = (props) => {
             <View style={{flex:0.5}}>
                 <View style={{flex:1,marginHorizontal:20,marginVertical:20}}>
                     <ScrollView>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Home')}} >
                             <View style={{height:50,width:windowWidth,marginHorizontal:10,flexDirection:'row'}}>
                                 <View style={{flex:0.15,justifyContent:'center'}}>
                                     <Icon name= {"ios-scan"} size={30} color={customColors.white}></Icon>
@@ -55,7 +56,7 @@ const DrawerContent = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Sett')}} >
                             <View style={{height:50,width:windowWidth,marginHorizontal:10,flexDirection:'row'}}>
                                 <View style={{flex:0.15,justifyContent:'center'}}>
                                     <Icon name= {"ios-browsers"} size={30} color={customColors.white}></Icon>

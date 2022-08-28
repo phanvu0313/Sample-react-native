@@ -9,7 +9,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const Popup = (props) => {
   return (
-    <Modal transparent visible={props.isOn} animationType='fade'>
+    <Modal transparent visible={props.isOn} animationType='none'>
         <BlurView blurType='light' >
             <TouchableWithoutFeedback onPress={()=>props.setIsOn(false)} style={styles.outside}>
                 <TouchableWithoutFeedback style={[styles.mainView,{width:props.width,height:props.height}]}>

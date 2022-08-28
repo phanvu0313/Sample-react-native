@@ -6,7 +6,7 @@ import ProfileMain from './Profile/ProfileMain';
 
 
 const StackScreens = createStackNavigator();
-const ProfileStack = () => {
+const ProfileStack = ({navigation}) => {
   return (
     <StackScreens.Navigator screenOptions={{headerShown: false}}>
       <StackScreens.Screen

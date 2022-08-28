@@ -1,5 +1,5 @@
 import React , {useEffect} from 'react'
-import { View, Text,StyleSheet,Image ,Animated,Easing} from 'react-native'
+import { View, Text,StyleSheet ,Animated,Easing,Image} from 'react-native'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { customColors } from '../assets/Colors';
@@ -49,11 +49,7 @@ const SplashScreen = ({ navigation }) => {
       }, [])
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row'}}>
-                <Animated.Text style={[{fontWeight:'bold',fontSize:100,opacity:opacity}]}>R I </Animated.Text>
-                <Animated.Text style={[{color:customColors.yellow,fontWeight:'bold',fontSize:100},rotation]}>O</Animated.Text>
-            </View>
-            <Animated.Text style={[{fontWeight:'bold',fontSize:40,opacity:opacity}]}>Coffee & Milktea</Animated.Text>
+           <Image resizeMode='contain' source={require('../assets/image/logo.png')} style={[styles.image,{width:300}]}/>
         </View>
     )
 }
